@@ -138,7 +138,7 @@
       using barycentric interpolation. Then, we call the respective sampling function (nearest or bilinear) to 
       apply the color of the pixel.
     </p>
-    <br />
+    <br /><br />
     <div id="row">
       <div>
         <img src="./task5-1.png" width="350px" id="figure"/>
@@ -153,11 +153,11 @@
     <div id="row">
       <div>
         <img src="./task5-1.png" width="350px" id="figure"/>
-        <figcaption>[REPLACE] Nearest sampling at 1 sample per pixel</figcaption>
+        <figcaption>[REPLACE] Nearest sampling at 16 samples per pixel</figcaption>
         </div>
       <div>
         <img src="./task5-2.png" width="350px" id="figure"/>
-        <figcaption>[REPLACE] Bilinear sampling at 1 sample per pixel</figcaption>
+        <figcaption>[REPLACE] Bilinear sampling at 16 samples per pixel</figcaption>
       </div>
     </div>
     <br />
@@ -182,35 +182,55 @@
       and get_level functions. For the options available, we can select nearest level, or bilinear, which computes 
       a weighted sum from each adjacent mipmap level using interpolation. 
     </p>
-
+    <p>
+      Now, we can adjust our sampling technique by (1) pixel sampling, (2) level sampling, and (3) number of 
+      samples per pixel. Here are some tradeoffs between speed, memory usage, and antialiasing power between 
+      the three various techniques...
+    </p>
+    <p>
+      <span style="font-weight:bold">Pixel Sampling: </span> 
+      Pixel sampling is fast for nearest sampling and slow for bilinear sampling. Its memory usage is relatively low
+      since it does not store and computational results. In terms of its power, pixel sampling tends to be weaker at 
+      producing images when textures are minified. The more minified or complicated an image is, the more antialiasing 
+      tends to exist, which can cause problems. 
+    </p>
+    <p>
+      <span style="font-weight:bold">Level Sampling: </span> 
+      Level sampling is also fast for nearest sampling and slower for bilinear sampling. In terms of speed, it is 
+      still faster than supersampling. Its memory usage is low, as it also does not store computational results. For its 
+      power, level sampling is the most efficient at antialiasing when texture minification is required or necessary to 
+      perform. It is effective at mapping textures from higher resolutions texture spaces into a lower resolution screen 
+      space.
+    </p>
+    <p>
+      <span style="font-weight:bold">Number of Samples per Pixel (Supersampling): </span> 
+      Finally, supersampling's speed is slow and uses the most memory. Although it is a good technique for higher sampling 
+      rates, it takes up a ton of memory. This is due to needing to save each super sample value, requiring lots of computational
+      effort. However, it can be effective at eliminating almost all aliasing. 
+    </p>
+    
+    <br /><br />
     <div id="row">
       <div>
         <img src="./task5-1.png" width="350px" id="figure"/>
-        <figcaption>[REPLACE] Nearest sampling at 1 sample per pixel</figcaption>
+        <figcaption>[REPLACE] L_ZERO and P_NEAREST</figcaption>
         </div>
       <div>
         <img src="./task5-2.png" width="350px" id="figure"/>
-        <figcaption>[REPLACE] Bilinear sampling at 1 sample per pixel</figcaption>
+        <figcaption>[REPLACE] L_ZERO and P_LINEAR</figcaption>
       </div>
     </div>
     <br /><br />
     <div id="row">
       <div>
         <img src="./task5-1.png" width="350px" id="figure"/>
-        <figcaption>[REPLACE] Nearest sampling at 1 sample per pixel</figcaption>
+        <figcaption>[REPLACE] L_NEAREST and P_NEAREST</figcaption>
         </div>
       <div>
         <img src="./task5-2.png" width="350px" id="figure"/>
-        <figcaption>[REPLACE] Bilinear sampling at 1 sample per pixel</figcaption>
+        <figcaption>[REPLACE] L_NEAREST and P_LINEAR</figcaption>
       </div>
     </div>
 
   </body>
 </html>
-
-
-Explain level sampling in your own words and describe how you implemented it for texture mapping.
-You can now adjust your sampling technique by selecting pixel sampling, level sampling, or the number of samples per pixel. Describe the tradeoffs between speed, memory usage, and antialiasing power between the three various techniques.
-Using a png file you find yourself, show us four versions of the image, using the combinations of L_ZERO and P_NEAREST, L_ZERO and P_LINEAR, L_NEAREST and P_NEAREST, as well as L_NEAREST and P_LINEAR.
-To use your own png, make a copy of one of the existing svg files in svg/texmap/ (or create your own modelled after one of the provided svg files). Then, near the top of the file, change the texture filename to point to your own png. From there, you can run ./draw and pass in that svg file to render it and then save a screenshot of your results.
-Note: Choose a png that showcases the different sampling effects well. You may also want to zoom in/out, use the pixel inspector, etc. to demonstrate the differences.
