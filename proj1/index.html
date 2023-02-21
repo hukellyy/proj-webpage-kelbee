@@ -76,8 +76,27 @@
       also modified to consider the rasterization of lines, such as the
       borderline in test 4.
     </p>
-
-    <p></p>
+    <div id="row">
+      <div>
+        <img src="./rate1.png" width="350px" id="figure" />
+        <figcaption>basic/test4.svg with default parameters and sample rate 1</figcaption>
+      </div>
+      <div>
+        <img src="./rate4.png" width="350px" id="figure" />
+        <figcaption>basic/test4.svg with default parameters and sample rate 4</figcaption>
+      </div>
+    </div>
+    <br /><br />
+    <div id="row">
+      <div>
+        <img src="./rate9.png" width="350px" id="figure" />
+        <figcaption>basic/test4.svg with default parameters and sample rate 9</figcaption>
+      </div>
+      <div>
+        <img src="./rate16.png" width="350px" id="figure" />
+        <figcaption>basic/test4.svg with default parameters and sample rate 16</figcaption>
+      </div>
+    </div>
 
     <br />
     <br />
@@ -112,7 +131,7 @@
     </p>
     <img src="./task_4.svg" width="600px" id="figure" />
     <figcaption>A smoothly blended color triangle</figcaption>
-
+    <br />
     <img src="./task_4.png" width="600px" id="figure" />
     <figcaption>
       A screenshot of svg/basic/test7.svg with default viewing parameters and
@@ -180,6 +199,15 @@
         <figcaption>Bilinear sampling at 16 samples per pixel</figcaption>
       </div>
     </div>
+    <p>
+      Shown above, the figure with bilinear pixel sampling clearly reduces the
+      effects of aliasing. This is likely because it takes the average of four 
+      texture values, making the image look smoother, and the colors more accurate.
+      Bilinear pixel sampling is especially useful in places of an images where colors
+      change, where there are sharp or thin corners, or where there are curves, since 
+      there may not be enough pixels to form a precise shape with nearest sampling. In 
+      these cases, images may turn out blocky or have jagged edges if we do not antialias.
+    </p>
     <br />
     <br />
 
@@ -246,23 +274,23 @@
     <br /><br />
     <div id="row">
       <div>
-        <img src="./task5-1.png" width="350px" id="figure" />
-        <figcaption>[REPLACE] L_ZERO and P_NEAREST</figcaption>
+        <img src="./l_zero_p_nearest.png" width="350px" id="figure" />
+        <figcaption>L_ZERO and P_NEAREST</figcaption>
       </div>
       <div>
-        <img src="./task5-2.png" width="350px" id="figure" />
-        <figcaption>[REPLACE] L_ZERO and P_LINEAR</figcaption>
+        <img src="./l_zero_p_linear.png" width="350px" id="figure" />
+        <figcaption>L_ZERO and P_LINEAR</figcaption>
       </div>
     </div>
     <br /><br />
     <div id="row">
       <div>
-        <img src="./task5-1.png" width="350px" id="figure" />
-        <figcaption>[REPLACE] L_NEAREST and P_NEAREST</figcaption>
+        <img src="./l_nearest_p_nearest.png" width="350px" id="figure" />
+        <figcaption>L_NEAREST and P_NEAREST</figcaption>
       </div>
       <div>
-        <img src="./task5-2.png" width="350px" id="figure" />
-        <figcaption>[REPLACE] L_NEAREST and P_LINEAR</figcaption>
+        <img src="./l_nearest_p_linear.png" width="350px" id="figure" />
+        <figcaption>L_NEAREST and P_LINEAR</figcaption>
       </div>
     </div>
   </body>
