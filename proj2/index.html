@@ -32,33 +32,33 @@
 
     <h2>Part 2</h2>
     <p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-		tempor incididunt ut labore et dolore magna aliqua. 
-	</p>
-    <div id="row">
-      <div>
-        <img src="./rate1.png" width="350px" id="figure" />
-        <figcaption>basic/test4.svg with default parameters and sample rate 1</figcaption>
-      </div>
-      <div>
-        <img src="./rate4.png" width="350px" id="figure" />
-        <figcaption>basic/test4.svg with default parameters and sample rate 4</figcaption>
-      </div>
-    </div>
-    <br /><br />
-    <div id="row">
-      <div>
-        <img src="./rate9.png" width="350px" id="figure" />
-        <figcaption>basic/test4.svg with default parameters and sample rate 9</figcaption>
-      </div>
-      <div>
-        <img src="./rate16.png" width="350px" id="figure" />
-        <figcaption>basic/test4.svg with default parameters and sample rate 16</figcaption>
-      </div>
-    </div>
-
-    <br />
-    <br />
+      Building off the concept of Bezier curves, we will now extend the idea to 
+      add another dimension. Bezier surfaces are also defined
+      by a set of control points, where a Bezier surface patch consists of 4x4 
+      control points. To visualize or implement this, we can imagine having 4 
+      curves in the u-direction, or 4x1 control points in the u-direction. Then,
+      we can define 4 more control points in the v-direction as "moving curves", 
+      which are essentially sweeping out the 2D surface / connecting the 4 curves 
+      made in the u direction. 
+	  </p>
+    <p>
+      To implement our Bezier surfaces, we extended off our code from Part 1. 
+      To evaluate a Bezier patch for a position <code>(u, v)</code> on the Bezier surface, we can use 
+      the 1D de Casteljau algorithm. First, we started by finding 4 u-points in one direction, 
+      specifically for each curve in the u-direction. After, we use these points to 
+      find the control points in the v-direction for the moving curve. 
+    </p>
+	<div id="row">
+		<div>
+		  <img src="img/part2.png" width="98%" id="figure" />
+		  <figcaption>bez/teapot.bez</figcaption>
+		</div>
+		<div>
+		  <img src="img/part2-nowire.png" width="98%" id="figure" />
+		  <figcaption>bez/teapot.bez with wireframe off</figcaption>
+		</div>
+	  </div>
+    <br /><br>
 
 	<h1>Section II: Sampling</h1>
 
@@ -67,8 +67,16 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
 		tempor incididunt ut labore et dolore magna aliqua. 
 	</p>
-    <img src="./task3.png" width="600px" id="figure" />
-    <figcaption>Cubeman squinting off into the distance</figcaption>
+  <div id="row">
+		<div>
+		  <img src="img/placeholder.png" width="98%" id="figure" />
+		  <figcaption>bez/teapot.bez</figcaption>
+		</div>
+		<div>
+		  <img src="img/placeholder.png" width="98%" id="figure" />
+		  <figcaption>bez/teapot.bez with wireframe off</figcaption>
+		</div>
+	  </div>
     <p></p>
     <br />
     <br />
@@ -78,8 +86,16 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
 		tempor incididunt ut labore et dolore magna aliqua. 
 	</p>
-    <img src="./task_4.svg" width="600px" id="figure" />
-    <figcaption>A smoothly blended color triangle</figcaption>
+    <div id="row">
+		<div>
+		  <img src="img/placeholder.png" width="98%" id="figure" />
+		  <figcaption>bez/teapot.bez</figcaption>
+		</div>
+		<div>
+		  <img src="img/placeholder.png" width="98%" id="figure" />
+		  <figcaption>bez/teapot.bez with wireframe off</figcaption>
+		</div>
+	  </div>
     <br />
       A screenshot of svg/basic/test7.svg with default viewing parameters and
       sample rate 1
@@ -96,25 +112,14 @@
     <br /><br />
     <div id="row">
       <div>
-        <img src="./task5_1.png" width="350px" id="figure" />
-        <figcaption>Nearest sampling at 1 sample per pixel</figcaption>
+        <img src="img/placeholder.png" width="98%" id="figure" />
+        <figcaption>bez/teapot.bez</figcaption>
       </div>
       <div>
-        <img src="./task5_2.png" width="350px" id="figure" />
-        <figcaption>Bilinear sampling at 1 sample per pixel</figcaption>
+        <img src="img/placeholder.png" width="98%" id="figure" />
+        <figcaption>bez/teapot.bez with wireframe off</figcaption>
       </div>
-    </div>
-    <br /><br />
-    <div id="row">
-      <div>
-        <img src="./task5_3.png" width="350px" id="figure" />
-        <figcaption>Nearest sampling at 16 samples per pixel</figcaption>
       </div>
-      <div>
-        <img src="./task5_4.png" width="350px" id="figure" />
-        <figcaption>Bilinear sampling at 16 samples per pixel</figcaption>
-      </div>
-    </div>
 	<p>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
 		tempor incididunt ut labore et dolore magna aliqua. 
@@ -132,25 +137,14 @@
     <br /><br />
     <div id="row">
       <div>
-        <img src="./l_zero_p_nearest.png" width="350px" id="figure" />
-        <figcaption>L_ZERO and P_NEAREST</figcaption>
+        <img src="img/placeholder.png" width="98%" id="figure" />
+        <figcaption>bez/teapot.bez</figcaption>
       </div>
       <div>
-        <img src="./l_zero_p_linear.png" width="350px" id="figure" />
-        <figcaption>L_ZERO and P_LINEAR</figcaption>
+        <img src="img/placeholder.png" width="98%" id="figure" />
+        <figcaption>bez/teapot.bez with wireframe off</figcaption>
       </div>
-    </div>
-    <br /><br />
-    <div id="row">
-      <div>
-        <img src="./l_nearest_p_nearest.png" width="350px" id="figure" />
-        <figcaption>L_NEAREST and P_NEAREST</figcaption>
       </div>
-      <div>
-        <img src="./l_nearest_p_linear.png" width="350px" id="figure" />
-        <figcaption>L_NEAREST and P_LINEAR</figcaption>
-      </div>
-    </div>
     <br /><br />
     <hr />
     <br />
