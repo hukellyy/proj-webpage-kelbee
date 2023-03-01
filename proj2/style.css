@@ -1,6 +1,7 @@
 html {
     font-family: 'Inter', sans-serif;
-    padding: 60px 26% 300px 26%;
+    padding: 60px 18% 300px 18%;
+    background-color: #F7F5E8;
   }
   
   figcaption {
@@ -19,7 +20,7 @@ html {
     border-width: 2px;
     border-radius: 10px;
     margin-bottom: 10px;
-    box-shadow: 1px 1px 15px grey;
+    box-shadow: 1px 1px 15px #CCCCCC;
   }
   
   #row {
@@ -29,3 +30,9 @@ html {
     
   }
   
+  code {
+    color: #3700AB;
+    background-color: #F0EEFF;
+    border-radius: 3px;
+    padding: 0px 4px 0px 4px;
+  }

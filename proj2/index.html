@@ -158,10 +158,6 @@
 		  <figcaption>Teapot after flipping a bunch of edges</figcaption>
 		</div>
 	  </div>
-    <br />
-      A screenshot of svg/basic/test7.svg with default viewing parameters and
-      sample rate 1
-    </figcaption>
 
     <br />
     <br />
@@ -172,40 +168,88 @@
     The first step in the implementation process for this operation was drawing a diagram
     with every edge, vertex, face, and half edge labled before and after the edge split operation.
     Similarly to edge flip, it was then a matter of updating pointers and creating new mesh 
-    elements if needed.
+    elements if needed. We created the diagrams (shown below) to help us keep track of pointers 
+    and new mesh elements added. This was super critical to our process as it helped us debug 
+    and ensure we were updating the correct pointers. 
 	</p>
-  <div>
-    <img src="img/placeholder.png" width="98%" id="figure" />
-    <figcaption>diagram</figcaption>
+  <div id="row">
+    <div>
+      <img src="img/Before.png" width="98%" id="figure" />
+      <figcaption>Triangles before splitting</figcaption>
+    </div>
+    <div>
+      <img src="img/After.png" width="98%" id="figure" />
+      <figcaption>Triangles after splitting </figcaption>
+    </div>
   </div>
+
+    <br />
+    <br />
   <p>
-		This problem was also very tedious to debug! We checked our diagram and code many many times.
-    TODO: add more about debugging LOL :P
+		This problem was also very tedious to debug! We checked our diagrams and code many many times
+    and ensured our pointers were updated correctly. However, just like task 4, we had to redo 
+    the implementation a few times before getting everything right. Debugging part 5 was especially 
+    tedious due to it having many more elements to handle, and new mesh elements to take into 
+    consideration. This made it extra confusing to keep track of, and we ran into segfaulting issues 
+    after typing out our intitial attempt. We tried cross-checking our diagram and implementation 
+    but couldn't find the error. 
+  </p>
+  <p>
+    After our first try, we decided to restart and redo how we assigned and labelled everything, 
+    in attempt to clean up our code and catch the mistakes. On our second try, we utilized our new reference 
+    diagrams and defined our initial mesh elements carefully, making sure to pay special attention to the
+    <code>setNeighbors()</code> function to ensure that we update the new pointers correctly. After 
+    typing everything out, the code didn't segfault, but now we were running into issues where 
+    our split operation was causing gaps in the mesh. We figured that this was likely due to not 
+    assigning the pointers correctly somewhere in our code, so we went through the code multiple times and 
+    eventually found around 4 bugs / wrong assignments that fixed our splitting functionality. 
+    Our errors had to do with misinterpretting the direction of our pointers and small mistakes 
+    in our diagram not matching up to the code. 
 	</p>
-    <br /><br />
+  <p>
+    Our successful implementation is shown below!
+  </p>
+    <br />
+    <br />
     <div id="row">
       <div>
-        <img src="img/placeholder.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez</figcaption>
+        <img src="img/part5-before.png" width="98%" id="figure" />
+        <figcaption>Teapot before splitting</figcaption>
       </div>
       <div>
-        <img src="img/placeholder.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez with wireframe off</figcaption>
+        <img src="img/part5-split.png" width="98%" id="figure" />
+        <figcaption>Teapot after splitting some edges </figcaption>
       </div>
+    </div>
+    <br />
+    <br />
+    <div id="row">
+      <div>
+        <img src="img/part5-before2.png" width="98%" id="figure" />
+        <figcaption>Teapot before splitting and flipping</figcaption>
       </div>
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-		tempor incididunt ut labore et dolore magna aliqua. 
-	</p>
+      <div>
+        <img src="img/part5-split-flipp.png" width="98%" id="figure" />
+        <figcaption>Teapot after splitting and flipping many edges</figcaption>
+      </div>
+      <div>
+        <img src="img/part5-top.png" width="98%" id="figure" />
+        <figcaption>Top of teapot after split and flip operations</figcaption>
+      </div>
+    </div>
 
     <br />
     <br />
 
     <h2>Part 6</h2>
     <p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-		tempor incididunt ut labore et dolore magna aliqua. 
+		For our implementation of loop subdivision, we used our implementation of edge splitting 
+    and flipped those that touched both an old and new edge. The outcome is a smoother mesh that 
+    looks higher quality/resolution and is more round. 
 	</p>
+  <p>
+    We started by finding new ve
+  </p>
 
     <br /><br />
     <div id="row">
