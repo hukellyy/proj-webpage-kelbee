@@ -16,17 +16,43 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
 		tempor incididunt ut labore et dolore magna aliqua. 
     </p>
-	<h1>Section I: Bezier Curves and Surfaces</h1>
+    <h1>Section I: Bezier Curves and Surfaces</h1>
 
     <h2>Part 1</h2>
     <p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-		tempor incididunt ut labore et dolore magna aliqua. 
-	</p>
+		De Casteljau's algorithm is a technique that allows us to evaluate Bezier curves. 
+    Bezier curves by definition have two endpoints and a number of control points on 
+    the curve. For de Casteljau, curves with less control points are ideal, since more 
+    points (and a higher-degree curve) are more difficult to interpolate.
+	  </p>
+    <p>
+    First, the algorithm does linear interpolation between pairs of adjacent points 
+    and lays down a new control point on each edge. Since the algorithm is recursive, 
+    this step is repeated, and a new control point is placed on each new edge until 
+    there is only one point left. 
+    </p>
+    <p>
+    For part 1, we implemented the function <code>evaluateStep()</code>, which inputs the most recent set of control points 
+    and finds the next level. In <code>evaluateStep()</code>, the algorithm iterates over the control 
+    points (<code>points</code>), checking if the size of the levels evaluated are equal to the number of control points, 
+    and computes the weighted average of its neighbouring points, using the parameter 't' and the formula 
+    for linear interpolation (lerp) defined by de Casteljau:
+
+    We store intermediate points found in a 2D vector called <code>intermediate</code> 
+    and return it as the output of the function. In this way, the most recent level of control points 
+    is stored in <code>intermediate</code> and updated each time the function is called. 
+    </p>
     <br />
-    <img src="./task1.png" width="600px" id="figure" />
-    <figcaption>basic/test4.svg with the default viewing parameters</figcaption>
-	
+    <div id="row">
+      <div>
+        <img src="img/part1-a.gif" width="98%" id="figure" />
+        <figcaption>Stepping through a Bezier curve with 6 points</figcaption>
+      </div>
+      <div>
+        <img src="img/part1-b.gif" width="98%" id="figure" />
+        <figcaption>A slightly different curve & modifying parameter t</figcaption>
+      </div>
+      </div>
     <br />
     <br />
 
@@ -82,9 +108,10 @@
 		<div>
 		  <img src="img/part3-phong.png" width="98%" id="figure" />
 		  <figcaption>bez/teapot.bez with smooth shading</figcaption>
-		</div>
-      
+		</div>  
 	</div>
+  <br />
+  <br />
   <div id="row">
     <div>
       <img src="img/part3-close.png" width="98%" id="figure" />
@@ -102,17 +129,33 @@
 
     <h2>Part 4</h2>
 	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-		tempor incididunt ut labore et dolore magna aliqua. 
+		To implement the edge flip operation, which essentially performs the function of 
+    flipping an edge, we started by outlining our approach as needing to reassign a 
+    bunch of pointers for halfedges, vertices, edges, and faces, to a new set of correct 
+    halfedges, vertices, edges, and faces. 
+
+    We then proceeded to jot down and initialize all the pointers necessary, using a diagram to keep track 
+    of all the halfedges, faces, vertices, face's edges, and corresponding halfedges that 
+    we need to update, illustrating what it should look like before and after the flip. Then, 
+    we started to reassign everything carefully, according to the diagrams drawn. This was 
+    definitely a very tedious process, and we had to go back and redo some reassignments due 
+    to typos or wrong pointers, but eventually we were able to reassign everything mostly correctly. 
+    To debug, we ran through the code multiple times to figure out if we missed a pointer or 
+    assigned one incorrectly by mistake. After a few iterations of this, we ended up with a working 
+    edge flip! Finally, we also identified an edge case where we checked if the edge is a boundary, in which we 
+    return right away. 
+
+    Thankfully, we didn't need to endure too much debugging for this part, but Part 5 was definitely 
+    an interesting experience...
 	</p>
     <div id="row">
 		<div>
-		  <img src="img/placeholder.png" width="98%" id="figure" />
-		  <figcaption>bez/teapot.bez</figcaption>
+		  <img src="img/before-part4.png" width="98%" id="figure" />
+		  <figcaption>Teapot before edge flipping</figcaption>
 		</div>
 		<div>
-		  <img src="img/placeholder.png" width="98%" id="figure" />
-		  <figcaption>bez/teapot.bez with wireframe off</figcaption>
+		  <img src="img/after-part4.png" width="98%" id="figure" />
+		  <figcaption>Teapot after flipping a bunch of edges</figcaption>
 		</div>
 	  </div>
     <br />
