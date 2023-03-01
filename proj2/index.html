@@ -64,22 +64,41 @@
 
     <h2>Part 3</h2>
 	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-		tempor incididunt ut labore et dolore magna aliqua. 
+		In Part 3, we were tasked with implementing area-weighted vertex normals to use for Phong shading. This allows us 
+    to better shade smooth surfaces as it produces the "smoothing" effect by performing linear interpolations on the vertex normals as 
+    opposed to face normals.
+	</p>
+  <p>
+		In order to compute an area-weighted normal for a given vertex, we first iterated through the faces incident to the vertex 
+    and found the face normal multiplied by the face's area for each face. We found the area from the Vertex positions for that face. We then
+    added the weighted face normal to the norm sum (which we initilized to be 0). After iterating through
+    all the faces, we then averaged the norm sum by dividing by the number of faces and returned the normalized norm sum.
 	</p>
   <div id="row">
 		<div>
-		  <img src="img/placeholder.png" width="98%" id="figure" />
-		  <figcaption>bez/teapot.bez</figcaption>
+		  <img src="img/part3-nophong.png" width="98%" id="figure" />
+		  <figcaption>bez/teapot.bez without smooth shading</figcaption>
 		</div>
 		<div>
-		  <img src="img/placeholder.png" width="98%" id="figure" />
-		  <figcaption>bez/teapot.bez with wireframe off</figcaption>
+		  <img src="img/part3-phong.png" width="98%" id="figure" />
+		  <figcaption>bez/teapot.bez with smooth shading</figcaption>
 		</div>
-	  </div>
-    <p></p>
-    <br />
-    <br />
+      
+	</div>
+  <div id="row">
+    <div>
+      <img src="img/part3-close.png" width="98%" id="figure" />
+      <figcaption>bez/teapot.bez without smooth shading</figcaption>
+    </div>
+    <div>
+      <img src="img/part3-phong-close.png" width="98%" id="figure" />
+      <figcaption>bez/teapot.bez with smooth shading</figcaption>
+    </div>
+  </div>
+    
+  <p></p>
+  <br />
+  <br />
 
     <h2>Part 4</h2>
 	<p>
@@ -106,8 +125,19 @@
 
     <h2>Part 5</h2>
     <p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-		tempor incididunt ut labore et dolore magna aliqua. 
+		After implementing the edge flip, we then implemented the edge split operation. 
+    The first step in the implementation process for this operation was drawing a diagram
+    with every edge, vertex, face, and half edge labled before and after the edge split operation.
+    Similarly to edge flip, it was then a matter of updating pointers and creating new mesh 
+    elements if needed.
+	</p>
+  <div>
+    <img src="img/placeholder.png" width="98%" id="figure" />
+    <figcaption>diagram</figcaption>
+  </div>
+  <p>
+		This problem was also very tedious to debug! We checked our diagram and code many many times.
+    TODO: add more about debugging LOL :P
 	</p>
     <br /><br />
     <div id="row">
