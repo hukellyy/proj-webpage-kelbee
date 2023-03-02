@@ -1,6 +1,6 @@
 html {
     font-family: 'Inter', sans-serif;
-    padding: 60px 18% 300px 18%;
+    padding: 60px 15% 300px 15%;
     background-color: #F7F5E8;
   }
   
@@ -27,7 +27,8 @@ html {
     display: flex;
     flex-direction: row;
     width: 100%;
-    
+    align-items: center;
+    justify-content: center;
   }
   
   code {
@@ -35,4 +36,8 @@ html {
     background-color: #F0EEFF;
     border-radius: 3px;
     padding: 0px 4px 0px 4px;
+  }
+
+  p {
+    line-height: 140%;
   }

@@ -13,8 +13,19 @@
     <br />
     <h2>Overview</h2>
     <p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-		tempor incididunt ut labore et dolore magna aliqua. 
+		Throughout this project, we explored mesh operations such as splitting, flipping, 
+    upsampling, and more. We implemented these operations in each stage of our project, and 
+    saw our mesh editor evolve and support more functions after each part. In the first section, we started by 
+    doing operations on a simple Bezier curve with 4 control points, then moved onto Bezier 
+    patches. In the second section, we worked with triangle meshes to perform more advanced operations 
+    such as smooth shading, flipping edges, splitting edges and loop subdivision. We definitely 
+    endured our fair share of ups and downs, particularly in Section 2 when we had to traverse the 
+    mesh and reassign several pointers for flipping and splitting. These operations' implementations were time 
+    consuming and required lots of debugging. However, it was extremeley satisfying seeing the 
+    fruits of our labour reflected on the GUI, as it got us closer and closer to higher resolution, 
+    smoothly rendered 3D objects. All in all, we thoroughly enjoyed working together to implemented 
+    mesh editing, and it taught us a lot about the operations that are currently supported in softwares like
+    Adobe Illustrator, Autodesk, and Blender. 
     </p>
     <h1>Section I: Bezier Curves and Surfaces</h1>
 
@@ -243,26 +254,82 @@
 
     <h2>Part 6</h2>
     <p>
-		For our implementation of loop subdivision, we used our implementation of edge splitting 
+		For our implementation of the loop subdivision algorithm, we used our implementation of edge splitting 
     and flipped those that touched both an old and new edge. The outcome is a smoother mesh that 
-    looks higher quality/resolution and is more round. 
+    looks higher quality/resolution since we are increasing the number of triangles in the input 
+    <code>mesh</code> and is more round. 
 	</p>
   <p>
-    We started by finding new ve
+    We started by finding new positions of all the vertices in the input mesh and then 
+    storing them in <code>newPosition</code>. Then, we split every edge in the mesh and 
   </p>
 
     <br /><br />
     <div id="row">
       <div>
-        <img src="img/placeholder.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez</figcaption>
+        <img src="img/part6-before-tea.png" width="98%" id="figure" />
+        <figcaption>Teapot before any upsampling</figcaption>
       </div>
       <div>
-        <img src="img/placeholder.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez with wireframe off</figcaption>
+        <img src="img/part6-middle-tea.png" width="98%" id="figure" />
+        <figcaption>Teapot after 1 level of upsampling</figcaption>
+      </div>
+      <div>
+        <img src="img/part6-last-tea.png" width="98%" id="figure" />
+        <figcaption>Teapot after 2 levels of upsampling</figcaption>
       </div>
       </div>
     <br /><br />
+    <div id="row">
+      <div>
+        <img src="img/part6 5.09.23 PM.png" width="98%" id="figure" />
+        <figcaption>Cube before any upsampling</figcaption>
+      </div>
+      <div>
+        <img src="img/part6 5.09.32 PM.png" width="98%" id="figure" />
+        <figcaption>Cube after 1 level of upsampling</figcaption>
+      </div>
+      <div>
+        <img src="img/part6 5.09.52 PM.png" width="98%" id="figure" />
+        <figcaption>Cube after 2 levels of upsampling</figcaption>
+      </div>
+      <div>
+        <img src="img/part6 5.10.03 PM.png" width="98%" id="figure" />
+        <figcaption>Cube after 5 levels of upsampling</figcaption>
+      </div>
+      <div>
+        <img src="img/part6 5.14.22 PM.png" width="98%" id="figure" />
+        <figcaption>Cube after many levels of upsampling</figcaption>
+      </div>
+      </div>
+      
+    <br /><br />
+
+    <p>
+      Loop subdivision evidently (as seen above) has the effect of rounding out or smoothing the object, 
+      which is especially clear in the images above when we render the cube. Another observation 
+      is that when we upsample, the volume of the entire 3D object shrinks. We noticed that when 
+      we increased upsampling multiple times, the shape starts to become more bumpy and less 
+      symmetrical than the original cube. THis is due to the fact that the initial cube mesh we 
+      start with is only using a single edge to split cube faces assymetrically. To fix this, we would 
+      preprocess the mesh by edge splitting along the flat faces of the cube, to maintain the 
+      original cubical shape. When we upsample after this, the cube will look more symmetrical.
+    </p>
+
+    <br /><br />
+
+    <div id="row">
+      <div>
+        <img src="img/cow-render.gif" width="100%" id="figure" />
+        <figcaption>GIF of upsampling our cow mesh!</figcaption>
+      </div>
+      <div>
+        <img src="img/peter-render.gif" width="80%" id="figure" />
+        <figcaption>GIF of upsampling our Peter mesh! (kind of slow)</figcaption>
+      </div>
+      </div>
+    <br /><br />
+    
     <hr />
     <br />
     <p>Link to Website:</p>
