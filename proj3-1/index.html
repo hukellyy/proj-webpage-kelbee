@@ -26,28 +26,47 @@
 	<h3>Walk through the ray generation and primitive intersection parts of the rendering pipeline.
   </h3>
     <p>
-      To generate rays, we used the image's coordinate system and transformed it into 
-      the camera space. We do this by taking in a point 
+      Ray generation and primitive intersection are key parts of the rendering pipeline. They 
+      are responsible for generating rays that mimic the behaviour of light in a given scene.
+      They do so by calculating the interaction between rays and objects in the scene. We start 
+      generating rays for each pixel of the image using the camera. Each pixel has a ray generated with 
+      the origin being the camera's position, and towards the direction of the pixel's image plane location.
+      We do this by transforming the coordinates of the pixel from the image to the camera space, then 
+      normalizing the final vector. The technique is referred to as a ray tracing method that can apply 
+      lighting to an object. 
     </p>
 	<h3>Explain the triangle intersection algorithm you implemented in your own words.  </h3>
     <p>
-      First, the algorithm does linear interpolation between pairs of adjacent
-      points and lays down a new control point on each edge. Since the algorithm
-      is recursive, this step is repeated, and a new control point is placed on
-      each new edge until there is only one point left.
+      The triangle intersection algorithm we implemented involves leveraging the Moller Trumbore algorithm
+      learned in class. This algorithm takes the 3 coordinates of the triangle and also its barycentric 
+      coordinates, and tests if the ray hits any space within the triangle or not. The ray-scene intersection
+      is important as it will permit us to calculate and visualize the shadows, lighting, and overall visibility 
+      of objects from the POV of the camera. Once we do the intersection tests, we need to test for validity. 
+      If the time in which the intersection occurs is somewhere in the range of the <code>max_t</code> and
+      <code>min_t</code> values, it will be valid, and an intersection exists. Otherwise, the intersection is 
+      invalid. 
     </p>
+    <p>
+      We also need to account for spherical primitives, and must implement sphere intersection. For spheres,
+      we use similar methodology as above for triangles, but instead utilize the origin of the circle along with the 
+      circle's radius to compute the time of intersection. 
+    </p>
+    <p>
+      After implementing the functions in part 1, we are able to render scenes of a few small .dae vectors as shown below. 
+    </p>
+
     <br />
     <h3>Show images with normal shading for a few small .dae files: </h3>
     <br />
     <div id="row">
       <div>
         <img src="img/CBspheres.png" width="98%" id="figure" />
-        <figcaption>Rendering of CBspheres_lambertian.dae</figcaption>
+        <figcaption>CBspheres_lambertian.dae</figcaption>
       </div>
       <div>
         <img src="img/cow.png" width="98%" id="figure" />
         <figcaption>
-          A slightly different curve & modifying parameter t
+          cow.dae
         </figcaption>
       </div>
     </div>
@@ -55,12 +74,12 @@
     <div id="row">
       <div>
         <img src="img/teapot.png" width="98%" id="figure" />
-        <figcaption>Rendering of CBspheres_lambertian.dae</figcaption>
+        <figcaption>teapot.dae</figcaption>
       </div>
       <div>
         <img src="img/CBcoil.png" width="98%" id="figure" />
         <figcaption>
-          A slightly different curve & modifying parameter t
+          CBcoil.dae
         </figcaption>
       </div>
     </div>
@@ -71,33 +90,59 @@
     <h3>Walk through your BVH construction algorithm. Explain the heuristic you chose for picking the splitting point.
     </h3>
     <p>
-      Building off the concept of Bezier curves, we will now extend the idea to
-      add another dimension. Bezier surfaces are also defined by a set of
-      control points, where a Bezier surface patch consists of 4x4 control
-      points. To visualize or implement this, we can imagine having 4 curves in
-      the u-direction, or 4x1 control points in the u-direction. Then, we can
-      define 4 more control points in the v-direction as "moving curves", which
-      are essentially sweeping out the 2D surface / connecting the 4 curves made
-      in the u direction.
+      Though we implemented the ray generation and insection methods above, rendering very complicated images
+      with various geometric primitives takes an extremely long time. With the implementations done in part 1, 
+      we need to look at each pixel, each ray, and do a scan through all the primitives for any possible intersection, 
+      even for ones that don't intersect the objects. This simply would not scale well. BVH is leveraged to help 
+      accelerate this process, through reducing the number of intersection tests needed between ray and scene objects.
+      BVH uses a bounding volume hierarchy which is a binary tree of geometric primitives; the primitives are 
+      essentially encapsulated by bounding volumes or boxes that represent the tree's leaf nodes.
     </p>
+    <p>
+      Our <code>construct_bvh</code> function starts by initializing a bounding box that encloses all the primitives in the scene. 
+      It then computes the centroid of each primitive and adds it to a running sum of centroids. The function also keeps 
+      track of the number of primitives in the scene.</p>
+    <p>
+      If the number of primitives is less than or equal to the maximum leaf size <code>max_leaf_size</code>, 
+      the function creates a leaf node that contains all the primitives and returns it. Otherwise, we computes "best" axis <code>bestAxis</code>
+      by finding one that spans the longest of the bounding box. Then, we computes the midpoint of the centroids of all the 
+      primitives along that axis. The primitives are then partitioned into two groups based on their centroids' positions 
+      relative to the midpoint found.
+    </p>
+    <p>
+      The function then recursively calls itself on the left and right partitions made to construct two child nodes. 
+      The child nodes are connected to the current node, and the current node is returned. This recursion works as, 
+      the <code>construct_bvh</code> function builds a BVH by recursively splitting the scene into smaller and smaller 
+      groups until each group contains at most the maximum leaf size number of primitives, which is given.
+    </p>    
+    <div>
+        <img src="img/cowsplit.gif" width="98%" id="figure" />
+        <figcaption>GIF of our box splitting (we found this very cool)</figcaption>
+      </div>
     <br />
     <h3>Show images with normal shading for a few large .dae files that you can only render with BVH acceleration: </h3>
     <br />
     <div id="row">
       <div>
         <img src="img/CBlucy.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez</figcaption>
+        <figcaption>CBlucy.dae</figcaption>
       </div>
       <div>
         <img src="img/maxplanck.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez with wireframe off</figcaption>
+        <figcaption>maxplanck.dae</figcaption>
       </div>
     </div>
     <br />
     <h3>Compare rendering times on a few scenes with moderately complex geometries with and without BVH acceleration. Present your results in a one-paragraph analysis.
     </h3>
     <p>
-      Lorem ipsum
+      For more simple renderings like <code>CBspheres_lambertian.dae</code>, we saw that the BVH implementation didn't 
+      really have much of an impact on rendering time, since there are only 14 primitives in that file and thus a linear 
+      scan would suffice. When we tested other renderings however, particularly those with very complex structures and many 
+      more primitives, the BVH algorithm drastically decreased their rendering times by minimizing the number of tests
+      needed to execute and leveraging binary lookups. Some renderings that became much faster included <code>cow.dae</code>
+      and <code>CBlucy.dae</code> One tradeoff is that there is a lot more pre-processing needed for 
+      constructing the BVH, but this becomes minute when we compare the time differences between non-BVH and BVH code. 
     </p>
     <br /><br />
 
