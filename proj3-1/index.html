@@ -86,7 +86,7 @@
     <br />
     <br />
 
-    <h2>Part 2</h2>
+    <h2>Part 2: BVH Construction</h2>
     <h3>Walk through your BVH construction algorithm. Explain the heuristic you chose for picking the splitting point.
     </h3>
     <p>
@@ -149,13 +149,35 @@
     <h2>Part 3</h2>
     <h3>Walk through both implementations of the direct lighting function.</h3>
     <p>
-      In Part 3, we were tasked with implementing area-weighted vertex normals
-      to use for Phong shading. This allows us to better shade smooth surfaces
-      as it produces the "smoothing" effect by performing linear interpolations
-      on the vertex normals as opposed to face normals.
+      In Part 3, we implement direct lighting, which kickstarts our process of modelling shading that is more realistic.
+      At a high level, we estimate direct illumination by projecting/casting shadow ray(s) from each ray to surface 
+      intersection point. Illumination only occurs if and only if a shadow ray intersects with a light source. 
     </p>
+    <p>
+      We start by implementing the diffuse BSDF and zero bounce illumination. Both of these functions are responsible 
+      for estimating the contribution of direct lighting at a given intersection point. The difference between the two 
+      is that the first function, estimate_direct_lighting_hemisphere, uses uniform sampling in a hemisphere to estimate 
+      direct lighting, while the second function, estimate_direct_lighting_importance, uses importance sampling.
+      </p>
+      <p>
+        The estimate_direct_lighting_hemisphere function first constructs a coordinate system with the hit point normal 
+        aligned with the Z-axis (0, 0, 1). It then generates a random direction in the hemisphere above the hit point using a 
+        hemisphere sampler. For each sample, it transforms the sample into world space, generates a shadow ray, and checks 
+        if the ray intersects any object in the scene. If it does not intersect any objects, it calculates the contribution 
+        of the light by multiplying the light's emission, the BSDF of the surface at the intersection point, and the cosine 
+        of the angle between the sampled direction and the surface normal. Finally, it averages the contributions over all 
+        the samples and returns the result.
+      </p>
+      <p>
+        The estimate_direct_lighting_importance function also constructs a coordinate system with the hit point normal 
+        aligned with the Z-axis. It then loops over all the lights in the scene and for each light, it generates a random 
+        direction using importance sampling according to the probability density function (pdf) of the light. It generates a 
+        shadow ray, checks for intersection with objects, and calculates the light's contribution using the same method as 
+        in the estimate_direct_lighting_hemisphere function. Finally, it averages the contributions over all the lights and samples 
+        and returns the result.
+      </p>
     <br />
-    <h3>Show some images rendered with both implementations of the direct lighting function:</h3>
+    <h3>Show some images rendered with both implementations of the direct lighting function. Focus on one particular scene with at least one area light and compare the noise levels in soft shadows when rendering with 1, 4, 16, and 64 light rays (the -l flag) and with 1 sample per pixel (the -s flag) using light sampling, not uniform hemisphere sampling.</h3>
     <br />
     <div id="row">
       <div>
@@ -179,17 +201,6 @@
         <figcaption>bez/teapot.bez with smooth shading</figcaption>
       </div>
     </div>
-    <h3>Focus on one particular scene with at least one area light and compare the noise levels in soft shadows when rendering with 1, 4, 16, and 64 light rays (the -l flag) and with 1 sample per pixel (the -s flag) using light sampling, not uniform hemisphere sampling.
-    </h3>
-    <p>
-      In order to compute an area-weighted normal for a given vertex, we first
-      iterated through the faces incident to the vertex and found the face
-      normal multiplied by the face's area for each face. We found the area from
-      the Vertex positions for that face. We then added the weighted face normal
-      to the norm sum (which we initilized to be 0). After iterating through all
-      the faces, we then averaged the norm sum by dividing by the number of
-      faces and returned the normalized norm sum.
-    </p>
     <h3>Compare the results between uniform hemisphere sampling and lighting sampling in a one-paragraph analysis.</h3>
     <p>Lorem ipsum
 
