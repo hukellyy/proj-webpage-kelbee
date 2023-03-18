@@ -17,19 +17,25 @@
     <br />
     <h2>Overview</h2>
     <p>
-      In Project 3-1, we successfully implemented a pathtracer rendering program, 
-	  including its most fundamental functionalities. Path-tracing is defined as 
-	  a rendering technique which produces realistic, photo-like images using global 
-	  illumination, simulated through interpreting the behaviour of light.
+      In Project 3-1, we successfully implemented a pathtracer rendering
+      program, including its most fundamental functionalities. Path-tracing is
+      defined as a rendering technique which produces realistic, photo-like
+      images using global illumination, simulated through interpreting the
+      behaviour of light.
     </p>
     <h2>Part 1: Ray Generation & Primitive Intersection</h2>
-	<h3>Walk through the ray generation and primitive intersection parts of the rendering pipeline.
-  </h3>
+    <h3>
+      Walk through the ray generation and primitive intersection parts of the
+      rendering pipeline.
+    </h3>
     <p>
-      To generate rays, we used the image's coordinate system and transformed it into 
-      the camera space. We do this by taking in a point 
+      To generate rays, we used the image's coordinate system and transformed it
+      into the camera space. We do this by taking in a point
     </p>
-	<h3>Explain the triangle intersection algorithm you implemented in your own words.  </h3>
+    <h3>
+      Explain the triangle intersection algorithm you implemented in your own
+      words.
+    </h3>
     <p>
       First, the algorithm does linear interpolation between pairs of adjacent
       points and lays down a new control point on each edge. Since the algorithm
@@ -37,7 +43,7 @@
       each new edge until there is only one point left.
     </p>
     <br />
-    <h3>Show images with normal shading for a few small .dae files: </h3>
+    <h3>Show images with normal shading for a few small .dae files:</h3>
     <br />
     <div id="row">
       <div>
@@ -68,7 +74,9 @@
     <br />
 
     <h2>Part 2</h2>
-    <h3>Walk through your BVH construction algorithm. Explain the heuristic you chose for picking the splitting point.
+    <h3>
+      Walk through your BVH construction algorithm. Explain the heuristic you
+      chose for picking the splitting point.
     </h3>
     <p>
       Building off the concept of Bezier curves, we will now extend the idea to
@@ -81,7 +89,10 @@
       in the u direction.
     </p>
     <br />
-    <h3>Show images with normal shading for a few large .dae files that you can only render with BVH acceleration: </h3>
+    <h3>
+      Show images with normal shading for a few large .dae files that you can
+      only render with BVH acceleration:
+    </h3>
     <br />
     <div id="row">
       <div>
@@ -94,11 +105,12 @@
       </div>
     </div>
     <br />
-    <h3>Compare rendering times on a few scenes with moderately complex geometries with and without BVH acceleration. Present your results in a one-paragraph analysis.
+    <h3>
+      Compare rendering times on a few scenes with moderately complex geometries
+      with and without BVH acceleration. Present your results in a one-paragraph
+      analysis.
     </h3>
-    <p>
-      Lorem ipsum
-    </p>
+    <p>Lorem ipsum</p>
     <br /><br />
 
     <h2>Part 3</h2>
@@ -110,7 +122,10 @@
       on the vertex normals as opposed to face normals.
     </p>
     <br />
-    <h3>Show some images rendered with both implementations of the direct lighting function:</h3>
+    <h3>
+      Show some images rendered with both implementations of the direct lighting
+      function:
+    </h3>
     <br />
     <div id="row">
       <div>
@@ -134,7 +149,11 @@
         <figcaption>bez/teapot.bez with smooth shading</figcaption>
       </div>
     </div>
-    <h3>Focus on one particular scene with at least one area light and compare the noise levels in soft shadows when rendering with 1, 4, 16, and 64 light rays (the -l flag) and with 1 sample per pixel (the -s flag) using light sampling, not uniform hemisphere sampling.
+    <h3>
+      Focus on one particular scene with at least one area light and compare the
+      noise levels in soft shadows when rendering with 1, 4, 16, and 64 light
+      rays (the -l flag) and with 1 sample per pixel (the -s flag) using light
+      sampling, not uniform hemisphere sampling.
     </h3>
     <p>
       In order to compute an area-weighted normal for a given vertex, we first
@@ -145,36 +164,24 @@
       the faces, we then averaged the norm sum by dividing by the number of
       faces and returned the normalized norm sum.
     </p>
-    <h3>Compare the results between uniform hemisphere sampling and lighting sampling in a one-paragraph analysis.</h3>
-    <p>Lorem ipsum
-
-    </p>
+    <h3>
+      Compare the results between uniform hemisphere sampling and lighting
+      sampling in a one-paragraph analysis.
+    </h3>
+    <p>Lorem ipsum</p>
     <br />
     <br />
 
     <h2>Part 4</h2>
-    <h3>Walk through your implementation of the indirect lighting function. </h3>
+    <h3>Walk through your implementation of the indirect lighting function.</h3>
     <p>
-      To implement the edge flip operation, which essentially performs the
-      function of flipping an edge, we started by outlining our approach as
-      needing to reassign a bunch of pointers for halfedges, vertices, edges,
-      and faces, to a new set of correct halfedges, vertices, edges, and faces.
-      We then proceeded to jot down and initialize all the pointers necessary,
-      using a diagram to keep track of all the halfedges, faces, vertices,
-      face's edges, and corresponding halfedges that we need to update,
-      illustrating what it should look like before and after the flip. Then, we
-      started to reassign everything carefully, according to the diagrams drawn.
-      This was definitely a very tedious process, and we had to go back and redo
-      some reassignments due to typos or wrong pointers, but eventually we were
-      able to reassign everything mostly correctly. To debug, we ran through the
-      code multiple times to figure out if we missed a pointer or assigned one
-      incorrectly by mistake. After a few iterations of this, we ended up with a
-      working edge flip! Finally, we also identified an edge case where we
-      checked if the edge is a boundary, in which we return right away.
-      Thankfully, we didn't need to endure too much debugging for this part, but
-      Part 5 was definitely an interesting experience...
+      In order to implement the indirect lighting function, we had to sum up the
+      possible paths that bounces of light could take after the zeroeth or first
+      bounces of light. This
     </p>
-    <h3>Show some images rendered with global (direct and indirect) illumination. Use 1024 samples per pixel.
+    <h3>
+      Show some images rendered with global (direct and indirect) illumination.
+      Use 1024 samples per pixel.
     </h3>
     <div id="row">
       <div>
@@ -186,24 +193,35 @@
         <figcaption>Teapot after flipping a bunch of edges</figcaption>
       </div>
     </div>
-    <h3>Pick one scene and compare rendered views first with only direct illumination, then only indirect illumination. Use 1024 samples per pixel. (You will have to edit PathTracer::at_least_one_bounce_radiance(...) in your code to generate these views.)
+    <h3>
+      Pick one scene and compare rendered views first with only direct
+      illumination, then only indirect illumination. Use 1024 samples per pixel.
+      (You will have to edit PathTracer::at_least_one_bounce_radiance(...) in
+      your code to generate these views.)
     </h3>
     <p>Lorem ipsum</p>
     <br />
 
-    <h3>For CBbunny.dae, compare rendered views with max_ray_depth set to 0, 1, 2, 3, and 100 (the -m flag). Use 1024 samples per pixel.
+    <h3>
+      For CBbunny.dae, compare rendered views with max_ray_depth set to 0, 1, 2,
+      3, and 100 (the -m flag). Use 1024 samples per pixel.
     </h3>
     <p>Lorem ipsum</p>
     <br />
 
-    <h3>Pick one scene and compare rendered views with various sample-per-pixel rates, including at least 1, 2, 4, 8, 16, 64, and 1024. Use 4 light rays.
+    <h3>
+      Pick one scene and compare rendered views with various sample-per-pixel
+      rates, including at least 1, 2, 4, 8, 16, 64, and 1024. Use 4 light rays.
     </h3>
     <p>Lorem ipsum</p>
     <br />
     <br />
 
     <h2>Part 5</h2>
-    <h3>Explain adaptive sampling. Walk through your implementation of the adaptive sampling.    </h3>
+    <h3>
+      Explain adaptive sampling. Walk through your implementation of the
+      adaptive sampling.
+    </h3>
     <p>
       After implementing the edge flip, we then implemented the edge split
       operation. The first step in the implementation process for this operation
@@ -215,7 +233,13 @@
       process as it helped us debug and ensure we were updating the correct
       pointers.
     </p>
-    <h3>Pick two scenes and render them with at least 2048 samples per pixel. Show a good sampling rate image with clearly visible differences in sampling rate over various regions and pixels. Include both your sample rate image, which shows your how your adaptive sampling changes depending on which part of the image you are rendering, and your noise-free rendered result. Use 1 sample per light and at least 5 for max ray depth.
+    <h3>
+      Pick two scenes and render them with at least 2048 samples per pixel. Show
+      a good sampling rate image with clearly visible differences in sampling
+      rate over various regions and pixels. Include both your sample rate image,
+      which shows your how your adaptive sampling changes depending on which
+      part of the image you are rendering, and your noise-free rendered result.
+      Use 1 sample per light and at least 5 for max ray depth.
     </h3>
     <div id="row">
       <div>
@@ -241,7 +265,7 @@
       We tried cross-checking our diagram and implementation but couldn't find
       the error.
     </p>
-  
+
     <br /><br />
     <hr />
     <br />
