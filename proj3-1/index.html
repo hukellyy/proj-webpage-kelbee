@@ -181,26 +181,35 @@
     <br />
     <div id="row">
       <div>
-        <img src="img/part3-nophong.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez without smooth shading</figcaption>
+        <img src="img/bunny_1_1.png" width="98%" id="figure" />
+        <figcaption>1 light ray</figcaption>
       </div>
       <div>
-        <img src="img/part3-phong.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez with smooth shading</figcaption>
+        <img src="img/bunny_4_1.png" width="98%" id="figure" />
+        <figcaption>4 light rays</figcaption>
       </div>
     </div>
     <br />
     <br />
     <div id="row">
       <div>
-        <img src="img/part3-close.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez without smooth shading</figcaption>
+        <img src="img/bunny_16_1.png" width="98%" id="figure" />
+        <figcaption>16 light rays</figcaption>
       </div>
       <div>
-        <img src="img/part3-phong-close.png" width="98%" id="figure" />
-        <figcaption>bez/teapot.bez with smooth shading</figcaption>
+        <img src="img/bunny_64_1.png" width="98%" id="figure" />
+        <figcaption>64 light rays</figcaption>
       </div>
     </div>
+    <p> 
+      Looking at the images rendered above, it can be seen that there is a drastic amount of 
+      noise that gets reduced as we add more light rays. With 1 ray, the shadowed area of the 
+      bunny is a lot noisier, and reaches a pretty large distance into the box. But as 
+      we increse rays, the shadow begins to get softer and concentrate more around the bunny than 
+      into the box. The increased number of rays evidently generates more accuracy in the estimation 
+      of reflected light (less variance). The shadows in the corners of the wall also soften as the number of rays 
+      increase.
+    </p>
     <h3>Compare the results between uniform hemisphere sampling and lighting sampling in a one-paragraph analysis.</h3>
     <p>Lorem ipsum
 
