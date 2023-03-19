@@ -186,27 +186,27 @@
     <p>
       In Part 3, we implement direct lighting, which kickstarts our process of
       modelling shading that is more realistic. At a high level, we estimate
-      direct illumination by projecting/casting shadow ray(s) from each ray to
-      surface intersection point. Illumination only occurs if and only if a
-      shadow ray intersects with a light source.
+      direct illumination by projecting rays from the surface intersection
+      point. Illumination only occurs if and only if the ray intersects with a
+      light source.
     </p>
     <p>
       We start by implementing the diffuse BSDF and zero bounce illumination.
       Both of these functions are responsible for estimating the contribution of
       direct lighting at a given intersection point. The difference between the
       two is that the first function, estimate_direct_lighting_hemisphere, uses
-      uniform sampling in a hemisphere to estimate direct lighting, while the
-      second function, estimate_direct_lighting_importance, uses importance
-      sampling.
+      uniform sampling in a hemisphere around the intersection point to estimate
+      direct lighting, while the second function,
+      estimate_direct_lighting_importance, uses importance sampling.
     </p>
     <p>
       The estimate_direct_lighting_hemisphere function first constructs a
       coordinate system with the hit point normal aligned with the Z-axis (0, 0,
       1). It then generates a random direction in the hemisphere above the hit
       point using a hemisphere sampler. For each sample, it transforms the
-      sample into world space, generates a shadow ray, and checks if the ray
-      intersects any object in the scene. If it does not intersect any objects,
-      it calculates the contribution of the light by multiplying the light's
+      sample into world space, generates a ray, and checks if the ray intersects
+      any object in the scene. If it does not intersect any objects, it
+      calculates the contribution of the light by multiplying the light's
       emission, the BSDF of the surface at the intersection point, and the
       cosine of the angle between the sampled direction and the surface normal.
       Finally, it averages the contributions over all the samples and returns
@@ -217,8 +217,8 @@
       coordinate system with the hit point normal aligned with the Z-axis. It
       then loops over all the lights in the scene and for each light, it
       generates a random direction using importance sampling according to the
-      probability density function (pdf) of the light. It generates a shadow
-      ray, checks for intersection with objects, and calculates the light's
+      probability density function (pdf) of the light. It generates a ray,
+      checks for intersection with objects, and calculates the light's
       contribution using the same method as in the
       estimate_direct_lighting_hemisphere function. Finally, it averages the
       contributions over all the lights and samples and returns the result.
@@ -268,7 +268,22 @@
       Compare the results between uniform hemisphere sampling and lighting
       sampling in a one-paragraph analysis.
     </h3>
-    <p>Lorem ipsum</p>
+    <p>
+      The results from uniform sampling are much noiser in general than the
+      results from importance sampling the lights because they sample uniformly
+      around the intersection point rather than from the light sources in the
+      scene themselves. The results from uniform sampling also are unable to
+      render images that only have point lights, whereas the lighting sampling
+      algorithm saves time on point lights by only sampling once. The results
+      for uniform hemisphere sampling and lighting sampling do converge to the
+      same image as the number of samples increases since they are built from
+      the same mesh, but for lower sample-per-pixel rates the lighting sampling
+      greatly out performs the uniform hemisphere sampling because the uniform
+      sampling leaves black dots throughut the image since each pixel is
+      sampling uniformly, whereas with lighting sampling each pixel is sampling
+      from the same set of lights, so noise is more concentrated in areas of
+      shadow.
+    </p>
     <br />
     <br />
 
@@ -277,7 +292,32 @@
     <p>
       In order to implement the indirect lighting function, we had to sum up the
       possible paths that bounces of light could take after the zeroeth or first
-      bounces of light. This
+      bounces of light. First, we had to implement <code>sample_f</code>, which
+      represents a diffuse material that reflects incoming light equally across
+      all directions on the hemisphere. This function samples the incoming ray,
+      and we implemented it by calling <code>get_sample</code> on the
+      <code>sampler</code> variable, which samples an incoming direction and
+      writes that into <code>wi</code>.
+    </p>
+    <p>
+      Once we implemented sample_f, we now are able to implement
+      <code>at_least_one_bounce_radiance</code>, which recursively calls
+      <code>one_bounce_radiance</code> for each bounce of light and stops using
+      a Russian Roulette algorithm that terminates with probability 0.4. Within
+      <code>one_bounce_radiance</code>, if the algorithm is not terminated by
+      Russian Roulette and if the depth of the ray is less than or equal to 1,
+      then we will call <code>sample_f</code> based on the BSDF at the current
+      <code>Intersection</code>, trace a ray in that direction, then recursively
+      call <code>at_least_one_bounce_radiance</code>
+      by adding the recursive output to the current output.
+    </p>
+    <p>
+      After <code>at_least_one_bounce_radiance</code> was updated, we also had
+      to update <code>est_radiance_global_illumination</code> so that it returns
+      <code
+        >L_out = zero_bounce_radiance(r, isect) +
+        at_least_one_bounce_radiance(r, isect);</code
+      >, which combines the direct and indirect lighting estimates.
     </p>
     <h3>
       Show some images rendered with global (direct and indirect) illumination.
@@ -285,12 +325,10 @@
     </h3>
     <div id="row">
       <div>
-        <img src="img/before-part4.png" width="98%" id="figure" />
-        <figcaption>Teapot before edge flipping</figcaption>
+        <img src="img/part4_banana.png" width="98%" id="figure" />
       </div>
       <div>
-        <img src="img/after-part4.png" width="98%" id="figure" />
-        <figcaption>Teapot after flipping a bunch of edges</figcaption>
+        <img src="img/part4_bunny.png" width="98%" id="figure" />
       </div>
     </div>
     <h3>
@@ -299,21 +337,94 @@
       (You will have to edit PathTracer::at_least_one_bounce_radiance(...) in
       your code to generate these views.)
     </h3>
-    <p>Lorem ipsum</p>
+    <div id="row">
+      <div>
+        <img src="img/direct_light.png" width="98%" id="figure" />
+        <figcaption>direct illumination </figcaption>
+      </div>
+      <div>
+        <img src="img/indirect_light.png" width="98%" id="figure" />
+        <figcaption>indirect illumination </figcaption>
+      </div>
+    </div>
     <br />
 
     <h3>
       For CBbunny.dae, compare rendered views with max_ray_depth set to 0, 1, 2,
       3, and 100 (the -m flag). Use 1024 samples per pixel.
     </h3>
-    <p>Lorem ipsum</p>
+    <div id="row">
+      <div>
+        <img src="img/max_ray_0.png" width="98%" id="figure" />
+        <figcaption>max_ray_depth = 0</figcaption>
+      </div>
+      <div>
+        <img src="img/max_ray_1.png" width="98%" id="figure" />
+        <figcaption>max_ray_depth = 1</figcaption>
+      </div>
+    </div>
+    <div id="row">
+      <div>
+        <img src="img/max_ray_2.png" width="98%" id="figure" />
+        <figcaption>max_ray_depth = 2</figcaption>
+      </div>
+      <div>
+        <img src="img/max_ray_3.png" width="98%" id="figure" />
+        <figcaption>max_ray_depth = 3</figcaption>
+      </div>
+      <div>
+        <img src="img/max_ray_100.png" width="98%" id="figure" />
+        <figcaption>max_ray_depth = 100</figcaption>
+      </div>
+    </div>
     <br />
 
     <h3>
       Pick one scene and compare rendered views with various sample-per-pixel
       rates, including at least 1, 2, 4, 8, 16, 64, and 1024. Use 4 light rays.
     </h3>
-    <p>Lorem ipsum</p>
+    <div id="row">
+      <div>
+        <img src="img/sphere_1.png" width="98%" id="figure" />
+        <figcaption>sample-per-pixel = 1</figcaption>
+      </div>
+      <div>
+        <img src="img/sphere_2.png" width="98%" id="figure" />
+        <figcaption>sample per pixel = 2</figcaption>
+      </div>
+    </div>
+    <div id="row">
+      <div>
+        <img src="img/sphere_3.png" width="98%" id="figure" />
+        <figcaption>sample per pixel = 3</figcaption>
+      </div>
+
+      <div>
+        <img src="img/sphere_4.png" width="98%" id="figure" />
+        <figcaption>sample per pixel = 4</figcaption>
+      </div>
+    </div>
+    <div id="row">
+      <div>
+        <img src="img/sphere_8.png" width="98%" id="figure" />
+        <figcaption>sample per pixel = 8</figcaption>
+      </div>
+      <div>
+        <img src="img/sphere_16.png" width="98%" id="figure" />
+        <figcaption>sample per pixel = 16</figcaption>
+      </div>
+    </div>
+    <div id="row">
+      <div>
+        <img src="img/sphere_64.png" width="98%" id="figure" />
+        <figcaption>sample per pixel = 64</figcaption>
+      </div>
+      <div>
+        <img src="img/sphere_1024.png" width="98%" id="figure" />
+        <figcaption>sample per pixel = 1024</figcaption>
+      </div>
+    </div>
+
     <br />
     <br />
 
@@ -323,15 +434,21 @@
       adaptive sampling.
     </h3>
     <p>
-      After implementing the edge flip, we then implemented the edge split
-      operation. The first step in the implementation process for this operation
-      was drawing a diagram with every edge, vertex, face, and half edge labled
-      before and after the edge split operation. Similarly to edge flip, it was
-      then a matter of updating pointers and creating new mesh elements if
-      needed. We created the diagrams (shown below) to help us keep track of
-      pointers and new mesh elements added. This was super critical to our
-      process as it helped us debug and ensure we were updating the correct
-      pointers.
+      In part 5 of the project, we added adaptive sampling to reduce the noise
+      in the image, which concentrates the samples in more difficult parts of
+      the image as opposed to using a fixed number of samples per pixel.
+    </p>
+    <p>
+      We implemented adaptive sampling by updating
+      <code>raytrace_pixel</code> to detect whether the pixel has converged as
+      we trace the samples thrrough that pixel. In order to do this, we solve
+      for the pixels convergence
+      <code>double I = 1.96 * (standard_deviation / sqrt(sample_number))</code>
+      and check if <code>I <= (maxTolerance * mean)</code>, for which we would
+      say the pixel has converged and we stop tracing rays for this pixel. we
+      calculated the standard deviation by solving for the variance using the
+      sum of the illuminance and sum of the illuminance squared for the pixel
+      and taking the square root of said variance.
     </p>
     <h3>
       Pick two scenes and render them with at least 2048 samples per pixel. Show
@@ -343,28 +460,23 @@
     </h3>
     <div id="row">
       <div>
-        <img src="img/Before.png" width="98%" id="figure" />
-        <figcaption>Triangles before splitting</figcaption>
+        <img src="img/part5_bunny.png" width="98%" id="figure" />
       </div>
       <div>
-        <img src="img/After.png" width="98%" id="figure" />
-        <figcaption>Triangles after splitting</figcaption>
+        <img src="img/part5_sphere.png" width="98%" id="figure" />
       </div>
     </div>
-
-    <br />
-    <br />
-    <p>
-      This problem was also very tedious to debug! We checked our diagrams and
-      code many many times and ensured our pointers were updated correctly.
-      However, just like task 4, we had to redo the implementation a few times
-      before getting everything right. Debugging part 5 was especially tedious
-      due to it having many more elements to handle, and new mesh elements to
-      take into consideration. This made it extra confusing to keep track of,
-      and we ran into segfaulting issues after typing out our intitial attempt.
-      We tried cross-checking our diagram and implementation but couldn't find
-      the error.
-    </p>
+    <div id="row">
+      <div>
+        <img src="img/part5_bunny_sr.png" width="98%" id="figure" />
+        <figcaption>sample rate image for the bunny</figcaption>
+      </div>
+      <div>
+        <img src="img/part5_sphere_sr.png" width="98%" id="figure" />
+        <figcaption>sample rate image for the spheres</figcaption>
+      </div>
+      </div>
+    </div>
 
     <br /><br />
     <hr />
