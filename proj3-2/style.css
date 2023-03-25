@@ -1,7 +1,7 @@
 html {
-    font-family: 'Verdana', sans-serif;
+    font-family: 'Inter', sans-serif;
     padding: 60px 25% 300px 25%;
-    background-color: #e0daee;
+    background-color: #daeee0;
   }
 
 
@@ -40,8 +40,8 @@ html {
   
   code {
     font-size: 14px;
-    color: #3700AB;
-    background-color: #F0EEFF;
+    color: #076700;
+    background-color: #f2ffee;
     border-radius: 3px;
     padding: 0px 4px 0px 4px;
   }

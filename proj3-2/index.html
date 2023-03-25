@@ -1,7 +1,191 @@
 <html>
-	<head>
-	</head>
-	<body>
-		Project 3-2 here
-	</body>
+  <head>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <h1>Project 3-2: Pathtracer 🕺</h1>
+    by Kelly Hu and Sofia Howard-Jimenez
+    <br />
+    <a href="https://hukellyy.github.io/proj-webpage-kelbee/proj3-1/index.html"
+      >https://hukellyy.github.io/proj-webpage-kelbee/proj3-1/index.html</a
+    >
+
+    -- head to the link for working GIFs! :]
+    <br /><br />
+    <hr />
+    <br />
+    <h2>Overview</h2>
+    <p>
+      In Project 3-1, we successfully implemented a pathtracer rendering
+      program, including its most fundamental functionalities. Path-tracing is
+      defined as a rendering technique which produces realistic, photo-like
+      images using global illumination, simulated through interpreting the
+      behaviour of light.
+    </p>
+    <h2>Part 1: Ray Generation & Primitive Intersection</h2>
+    <h3>
+      Walk through the ray generation and primitive intersection parts of the
+      rendering pipeline.
+    </h3>
+    <p>
+      Ray generation and primitive intersection are key parts of the rendering
+      pipeline. They are responsible for generating rays that mimic the
+      behaviour of light in a given scene. They do so by calculating the
+      interaction between rays and objects in the scene. We start generating
+      rays for each pixel of the image using the camera. Each pixel has a ray
+      generated with the origin being the camera's position, and towards the
+      direction of the pixel's image plane location. We do this by transforming
+      the coordinates of the pixel from the image to the camera space, then
+      normalizing the final vector. The technique is referred to as a ray
+      tracing method that can apply lighting to an object.
+    </p>
+    <h3>
+      Explain the triangle intersection algorithm you implemented in your own
+      words.
+    </h3>
+    <p>
+      The triangle intersection algorithm we implemented involves leveraging the
+      Moller Trumbore algorithm learned in class. This algorithm takes the 3
+      coordinates of the triangle and also its barycentric coordinates, and
+      tests if the ray hits any space within the triangle or not. The ray-scene
+      intersection is important as it will permit us to calculate and visualize
+      the shadows, lighting, and overall visibility of objects from the POV of
+      the camera. Once we do the intersection tests, we need to test for
+      validity. If the time in which the intersection occurs is somewhere in the
+      range of the <code>max_t</code> and <code>min_t</code> values, it will be
+      valid, and an intersection exists. Otherwise, the intersection is invalid.
+    </p>
+    <p>
+      We also need to account for spherical primitives, and must implement
+      sphere intersection. For spheres, we use similar methodology as above for
+      triangles, but instead utilize the origin of the circle along with the
+      circle's radius to compute the time of intersection.
+    </p>
+    <p>
+      After implementing the functions in part 1, we are able to render scenes
+      of a few small .dae vectors as shown below.
+    </p>
+
+    <br />
+    <h3>Show images with normal shading for a few small .dae files:</h3>
+    <br />
+    <div id="row">
+      <div>
+        <img src="img/CBspheres.png" width="98%" id="figure" />
+        <figcaption>CBspheres_lambertian.dae</figcaption>
+      </div>
+      <div>
+        <img src="img/cow.png" width="98%" id="figure" />
+        <figcaption>cow.dae</figcaption>
+      </div>
+    </div>
+    <br />
+    <div id="row">
+      <div>
+        <img src="img/teapot.png" width="98%" id="figure" />
+        <figcaption>teapot.dae</figcaption>
+      </div>
+      <div>
+        <img src="img/CBcoil.png" width="98%" id="figure" />
+        <figcaption>CBcoil.dae</figcaption>
+      </div>
+    </div>
+    <br />
+    <br />
+
+    <h2>Part 2: BVH Construction</h2>
+    <h3>
+      Walk through your BVH construction algorithm. Explain the heuristic you
+      chose for picking the splitting point.
+    </h3>
+    <p>
+      Though we implemented the ray generation and insection methods above,
+      rendering very complicated images with various geometric primitives takes
+      an extremely long time. With the implementations done in part 1, we need
+      to look at each pixel, each ray, and do a scan through all the primitives
+      for any possible intersection, even for ones that don't intersect the
+      objects. This simply would not scale well. BVH is leveraged to help
+      accelerate this process, through reducing the number of intersection tests
+      needed between ray and scene objects. BVH uses a bounding volume hierarchy
+      which is a binary tree of geometric primitives; the primitives are
+      essentially encapsulated by bounding volumes or boxes that represent the
+      tree's leaf nodes.
+    </p>
+    <p>
+      Our <code>construct_bvh</code> function starts by initializing a bounding
+      box that encloses all the primitives in the scene. It then computes the
+      centroid of each primitive and adds it to a running sum of centroids. The
+      function also keeps track of the number of primitives in the scene.
+    </p>
+    <p>
+      If the number of primitives is less than or equal to the maximum leaf size
+      <code>max_leaf_size</code>, the function creates a leaf node that contains
+      all the primitives and returns it. Otherwise, we computes "best" axis
+      <code>bestAxis</code>
+      by finding one that spans the longest of the bounding box. Then, we
+      computes the midpoint of the centroids of all the primitives along that
+      axis. The primitives are then partitioned into two groups based on their
+      centroids' positions relative to the midpoint found.
+    </p>
+    <p>
+      The function then recursively calls itself on the left and right
+      partitions made to construct two child nodes. The child nodes are
+      connected to the current node, and the current node is returned. This
+      recursion works as, the <code>construct_bvh</code> function builds a BVH
+      by recursively splitting the scene into smaller and smaller groups until
+      each group contains at most the maximum leaf size number of primitives,
+      which is given.
+    </p>
+    <div>
+      <img src="img/cowsplit.gif" width="98%" id="figure" />
+      <figcaption>
+        GIF of our box splitting (we found this very cool)
+      </figcaption>
+    </div>
+    <br />
+    <h3>
+      Show images with normal shading for a few large .dae files that you can
+      only render with BVH acceleration:
+    </h3>
+    <br />
+    <div id="row">
+      <div>
+        <img src="img/CBlucy.png" width="98%" id="figure" />
+        <figcaption>CBlucy.dae</figcaption>
+      </div>
+      <div>
+        <img src="img/maxplanck.png" width="98%" id="figure" />
+        <figcaption>maxplanck.dae</figcaption>
+      </div>
+    </div>
+    <br />
+    <h3>
+      Compare rendering times on a few scenes with moderately complex geometries
+      with and without BVH acceleration. Present your results in a one-paragraph
+      analysis.
+    </h3>
+    <p>
+      For more simple renderings like <code>CBspheres_lambertian.dae</code>, we
+      saw that the BVH implementation didn't really have much of an impact on
+      rendering time, since there are only 14 primitives in that file and thus a
+      linear scan would suffice. When we tested other renderings however,
+      particularly those with very complex structures and many more primitives,
+      the BVH algorithm drastically decreased their rendering times by
+      minimizing the number of tests needed to execute and leveraging binary
+      lookups. Some renderings that became much faster included
+      <code>cow.dae</code> and <code>CBlucy.dae</code> One tradeoff is that
+      there is a lot more pre-processing needed for constructing the BVH, but
+      this becomes minute when we compare the time differences between non-BVH
+      and BVH code.
+    </p>
+    <br /><br />
+    <br /><br />
+    <hr />
+    <br />
+    <p>Link to Website:</p>
+    <a href="https://hukellyy.github.io/proj-webpage-kelbee/proj3-1/index.html"
+      >https://hukellyy.github.io/proj-webpage-kelbee/proj3-1/index.html</a
+    >
+  </body>
 </html>
