@@ -176,7 +176,46 @@
       different images. Note that, to change the α, just open the .dae file and
       search for microfacet.
     </h3>
-    <p></p>
+    <p>
+	In part 2 of the project, we implemented the microfacet material model, which 
+	enables us to render a range of different conductor/metallic materials. First,
+	we computed the NDF (normal distribution function), which helps us replicate a 
+	material's texture or roughness using its alpha value, and F (Fresnel term). When 
+	toggling between different alpha values, it is important to note than lower alphas 
+	correspond to more mirror-like, shiny surfaces, while high alphas are rougher and 
+	more textured. As shown in the images rendered below, the dragon with 0.005 alpha 
+	value appear most noisy and shiny, while the dragon with 0.5 is the most rough, 
+	diffuse, and bascially has no noise. See image captions for more difference comments.
+	</p>
+	<div id="row">
+		<div>
+		  <img src="img/0.005.png" width="98%" id="figure" />
+		  <figcaption> alpha = 0.005; most noisy on the model and walls, mirror-like
+		</figcaption>
+		</div>
+		<div>
+		  <img src="img/0.05.png" width="98%" id="figure" />
+		  <figcaption>
+			alpha = 0.05; less noticeable noisy spots, material still looks very mirrory 
+		  </figcaption>
+		</div>
+	  </div>
+	<br />
+	<div id="row">
+		<div>
+		  <img src="img/0.25.png" width="98%" id="figure" />
+		  <figcaption>alpha = 0.25; more diffuse and accurate material, noise almost gone</figcaption>
+		</div>
+		<div>
+		  <img src="img/0.5.png" width="98%" id="figure" />
+		  <figcaption>alpha = 0.5; most rough, material looking good and accurate</figcaption>
+		</div>
+	  </div>
+	  <p>
+		The images above were rendered with 128 samples per pixel and 1 sample per light with 
+		5 number of bounces. 
+		</p>
+	<br />
 
     <h3>
       Show two images of scene CBbunny_microfacet_cu.dae rendered using cosine
@@ -184,18 +223,31 @@
       rate should be fixed at 64 samples per pixel and 1 samples per light. The
       number of bounces should be at least 5. Briefly discuss their difference.
     </h3>
-    <p></p>
+    <p>
+	 Cosine hemisphere sampling is characterized by sampling evenly over rays in a hemisphere, 
+	 allowing us to sample diffuse BRDFs. Because our models in this case is a microfacet dragon or bunny, however, 
+	 we end up producing more noise due to the fact that it is not a diffuse material. Looking 
+	 at the importance sampled image, we can see that it is a lot less noisy, even using the 
+	 same number of samples (64 per pixel). This is because importance sampling prioritizes sampels 
+	 that have a larger impact on the image, exemplified in the images rendered below...
+	</p>
+	<div id="row">
+		<div>
+		  <img src="img/bunnydefault.png" width="98%" id="figure" />
+		  <figcaption>bunny rendered using cosine hemisphere sampling</figcaption>
+		</div>
+		<div>
+		  <img src="img/bunnyimp.png" width="98%" id="figure" />
+		  <figcaption>bunny rendered using important samplings</figcaption>
+		</div>
+	  </div>
+
+	  <p>
+		The images above were rendered with 64 samples per pixel and 1 sample per light with 
+		5 number of bounces. 
+		</p>
+
     <br />
-    <div id="row">
-      <div>
-        <img src="img/CBlucy.png" width="98%" id="figure" />
-        <figcaption>CBlucy.dae</figcaption>
-      </div>
-      <div>
-        <img src="img/maxplanck.png" width="98%" id="figure" />
-        <figcaption>maxplanck.dae</figcaption>
-      </div>
-    </div>
     <br />
     <h3>
       Show at least one image with some other conductor material, replacing eta
@@ -203,7 +255,24 @@
       modifying them arbitrarily. Tell us what kind of material your parameters
       correspond to.
     </h3>
-    <p></p>
+    <p>
+		One of the coolest things about this part is that we can modify the n and k values 
+		to model any type of conductor material! Below we use the eta values <code>1.8795 1.5472 1.1353</code> 
+		and k values <code>5.1076 4.6437 3.9980</code> to model platinum material and 
+		the eta values <code>0.3026 0.3304 0.6583</code> and k values <code>4.3437 7.551 12.9654</code> to 
+		model silver material. 
+	</p>
+	<div id="row">
+		<div>
+		  <img src="img/bunnysilver.png" width="98%" id="figure" />
+		  <figcaption>bunny rendered using silver material</figcaption>
+		</div>
+		<div>
+		  <img src="img/bunnyplat.png" width="98%" id="figure" />
+		  <figcaption>bunny rendered using platinum material</figcaption>
+		</div>
+	  </div>
+
     <br /><br />
   </body>
 </html>
