@@ -65,18 +65,103 @@
     </div>
     <br />
     <div>
-      <img src="img/spheres_m100.png" width="98%" id="figure" />
+      <img src="img/spheres_m100s1024.png" width="98%" id="figure" />
       <figcaption>max_ray_depth = 100</figcaption>
     </div>
     <p></p>
     <h3>Point out the new multibounce effects that appear in each image.</h3>
-    <p></p>
-
+    <p>
+      When there are zero bounces of light, the image renders a black screen
+      since we are just calculating the light that comes from the light source
+      itself. After adding a bounce of light, we are able to render the walls
+      and the spheres, but the spheres look black. They each have a patch of
+      white because the spheres are now reflective, so after one bounce there is
+      still a reflection from the area light because the light hits that surface
+      of sphere and reflects with only once bounce.
+    </p>
+    <p>
+      After two bounces of light, the sphere in the back is able to reflect the
+      other sphere since the light hits of the area light onto the sphere and
+      then outwards towards the rest of the scene. The sphere in the front is
+      beginning to show some reflection as well but since it is also refractive
+      it is not able to fully render the material with only two bounces.
+      Additionally, in the reflection for the sphere in the back the roof and
+      back wall are black still as well as the other sphere in the reflection.
+    </p>
+    <p>
+      At three bounces of light the refractive sphere in the front is able to
+      render much better. The reflection for the left sphere also looks better,
+      the back wall and sphere is still black, but the roof is now lit from the
+      third bounce.
+    </p>
+    <p>
+      After four bounces of light, there is now a patch of light on the right
+      wall from the refraction from the right sphere from the fourth bounce. For
+      the sphere on the left, the right sphere is now lit up in the reflection
+      but the back wall is still black.
+    </p>
+    <p>
+      There are not many changes between 4 and 5 bounces, but the right sphere
+      in the reflection of the left sphere shows the relfection of the area
+      light much better. Additionally, the spot on the wall from the right
+      sphere looks a little brighter from the additional light. Another
+      interesting thing is that the quality appears to be getting worse from the
+      3 to 5 bounce images since I am keeping the sample size the same for all
+      three images.
+    </p>
+    <p>
+      For m=100, the image doesn't look much different, however due to the
+      additional bounces of light you can see somme speckling in the reflection
+      of the area light on the right sphere and more speckling next to the white
+      circle under the right sphere.
+    </p>
     <br />
     <h3>
       Explain how these bounce numbers relate to the particular effects that
       appear. Make sure to include all screenshots.
     </h3>
+    <p>
+      As I mentioned earlier, the zero bounce renders a black screen becasue it
+      is only calculating light for zero bounces--just the light source.
+    </p>
+    <p>
+      For 1 bounce of light, it is calculating the light from the ceiling to the
+      point of intersection from the area light on the top reflective surface of
+      the sphere back to the camera.
+    </p>
+    <p>
+      For 2 bounces of light we are able to calculate the light from the area
+      light to the top surface of the sphere to the bottom surface of the sphere
+      back to the camera.
+    </p>
+    <p>
+      For 3 bounces of light we are able to calculate the light from the area
+      light to the top surface of the sphere to the bottom surface of the sphere
+      to the floor back to the camera.
+    </p>
+    <p>
+      For 3 bounces of light we are able to calculate the light from the area
+      light to the top surface of the sphere to the bottom surface of the sphere
+      to the floor back to the camera.
+    </p>
+    <p>
+      For 4 bounces of light we are able to calculate the light from the area
+      light to the top surface of the sphere to the bottom surface of the sphere
+      to the floor to the right wall (for the right sphere) and to the right
+      sphere (for the left sphere) back to the camera.
+    </p>
+    <p>
+      For 5 bounces of light it has the same bounces as up to 4, but on the
+      fifth bounce it bounces back up towards the roof making the whole scene
+      look a little brighter, and in the left sphere it is also able to capture
+      the bounce of light from the area light onto the right sohere in the
+      reflection much better.
+    </p>
+    <p>
+      For 100 bounces of light, it is calculating repeated bounces cast from the
+      reflections and refractions, so that is why the speckling appears more
+      prominently in the right image as mentioned above.
+    </p>
     <br />
 
     <br />
