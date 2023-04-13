@@ -250,12 +250,32 @@
       on the sphere using the default ks = 5000 as well as with ks = 500 and ks = 50000. Describe 
       the differences in the results.</h3>
     <p>
-     With a lower ks value of 500, we can observe through the motions of the cloth falling onto the sphere 
+     With a lower ks value of 500, we can observe from motions of the cloth falling onto the sphere 
      that the cloth has more wrinkles created when it is in its final resting state, almost as if the fabric is thinner or lighter. When we increased 
      it to 50000, the cloth in its resting state has more wrinkles and droops down less, wrapping the sphere 
-     less than the default ks parameter does. With the 500 ks value, the cloth is wrapping the sphere the most 
-     tightly.
+     less than the default ks parameter does. With the 500 ks value, the angle that the cloth makes with the 
+     sphere is also tighter than the ks value of 50000, which creates a more outwards angle against the sphere.
     </p>
+
+    <div id="row">
+      <div>
+        <img src="img/3ks_5000.gif" width="98%" id="figure" />
+        <figcaption>[GIF] ks = 5000 (default)</figcaption>
+      </div>
+
+      <div>
+        <img src="img/3ks_500.gif" width="98%" id="figure" />
+        <figcaption>[GIF] ks = 500</figcaption>
+      </div>
+
+      <div>
+        <img src="img/3ks_50000.gif" width="98%" id="figure" />
+        <figcaption>[GIF] ks = 50000</figcaption>
+      </div>
+    </div>
+
+    <br />
+
     <div id="row">
       <div>
         <img src="img/5000.png" width="98%" id="figure" />
@@ -321,14 +341,18 @@
       </div>
     <h3>
       Vary the density as well as ks and describe with words and screenshots how they affect the behavior of the cloth as it falls on itself.
-
     </h3>
+
+    <h3>Varying density ~</h3>
+
     <div id="row">
       <div>
-        <img src="img/part4_banana.png" width="98%" id="figure" />
+        <img src="img/4den_1.gif" width="98%" id="figure" />
+        <figcaption>density = 1</figcaption>
       </div>
       <div>
-        <img src="img/part4_bunny.png" width="98%" id="figure" />
+        <img src="img/4den_1000.gif" width="98%" id="figure" />
+        <figcaption>density = 1000</figcaption>
       </div>
     </div>
     <p>
@@ -336,14 +360,42 @@
       to higher values that create smaller folds that drape over each other more times. The differences in their 
       resting states can be described as lower densities having less overlapping of folds and higher densities having more 
       overlapping of folds. 
-
     </p>
+
+
+    <h3>Varying ks ~</h3>
+
+    <div id="row">
+      <div>
+        <img src="img/4ks_100.gif" width="98%" id="figure" />
+        <figcaption>[GIF] ks = 100</figcaption>
+      </div>
+      <div>
+        <img src="img/4ks_50000.gif" width="98%" id="figure" />
+        <figcaption>[GIF] ks = 50000</figcaption>
+      </div>
+    </div>
+
+    <br />
+
+    <div id="row">
+      <div>
+        <img src="img/ks_100still.png" width="98%" id="figure" />
+        <figcaption>ks = 100 in rest </figcaption>
+      </div>
+      <div>
+        <img src="img/ks_50000still.png" width="98%" id="figure" />
+        <figcaption>ks = 50000 in rest</figcaption>
+      </div>
+    </div>
+
     <p>
       When we vary ks, a lower value (as seen before) makes for a more flexible and springy or bouncy cloth.
       When ks a smaller value, it will tend to fold over multiple times and bounce around multiple times 
-      before it comes to a resting position. Even as we observe it in its resting phase, it will begin to unfold 
-      slowly. When it becomes larger, however, the fabric is more rigid and tough, making it bounch around 
-      less and assume its resting position faster.
+      before it comes to a resting position. We also observed the cloth in its resting phase — for smaller ks, 
+      we noticed that the cloth continuously jiggles around and eventually unfolds since it has more overlaps. 
+      When ks becomes larger, however, the fabric is more rigid and tough, making it bounce around less and have less
+      overlaps, ultimately assuming its final resting position faster.
     </p>
     <br />
     <br />
