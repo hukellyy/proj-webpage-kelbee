@@ -17,8 +17,14 @@
     <br />
     <h2>Overview</h2>
     <p>
-      In Project 4, we successfully implemented a cloth simulator. .... [explain challenges 
-      and troubleshooting since we lost points for that in proj 3]
+      In Project 4, we successfully implemented a cloth simulator that uses a point mass and spring model. 
+      In this project, we had to implement Verlet integration for cloth movement, handle collisions with 
+      the cloth itself or other objects in the scene, and implement various vertex shaders to render various
+      material and lighting effects. This project was very interesting, but also challenging--especially when it 
+      came to implementing self-collision handling. That part of the project was difficult as it required a lot of
+      thought in implementing the best hash function and deriving the correction vector. We tried many hash functions
+      until we found one that worked effectively for us! However, completing this project was very rewarding as 
+      the cloth simulator began to appear more and more realistic as we completed parts of the project.
     </p>
     <h2>Part 1: Masses and springs</h2>
     <h3>
@@ -26,9 +32,7 @@
       clearly see the cloth wireframe to show the structure of your point masses and 
       springs.
     </h3>
-    <p>
-      Lorem ipsum
-    </p>
+  
     <div id="row">
       <div>
         <img src="img/all-constraints.png" width="98%" id="figure" />
@@ -39,9 +43,7 @@
       Show us what the wireframe looks like (1) without any shearing constraints, 
       (2) with only shearing constraints, and (3) with all constraints.
     </h3>
-    <p>
-      Lorem ipsum
-    </p>
+  
     <div id="row">
       <div>
         <img src="img/struct-bend.png" width="98%" id="figure" />
@@ -226,7 +228,9 @@
     </div>
 
     <p>
-      TO DO HERE AHH SORRY SOFIA
+      In comparison to the default parameters, we see more folds in the cloth when the density is increased or ks is decreased as due to the reasons explained above.
+      We see less folds in the cloth when the density has been decreased or ks has been increased, and the cloth swings much slower when the damping is incresed because 
+      there is a higher loss in energy. ***
     </p>
 
     <h3>
@@ -242,54 +246,25 @@
     <br /><br />
 
     <h2>Part 3: Handling collisions with other objects</h2>
-    <h3>Walk through both implementations of the direct lighting function.</h3>
+    <h3>Show us screenshots of your shaded cloth from scene/sphere.json in its final resting state 
+      on the sphere using the default ks = 5000 as well as with ks = 500 and ks = 50000. Describe 
+      the differences in the results.</h3>
     <p>
-      In Part 3, we implement direct lighting, which kickstarts our process of
-      modelling shading that is more realistic. At a high level, we estimate
-      direct illumination by projecting rays from the surface intersection
-      point. Illumination only occurs if and only if the ray intersects with a
-      light source.
+     Lorem ipsum
     </p>
-    <p>
-      We start by implementing the diffuse BSDF and zero bounce illumination.
-      Both of these functions are responsible for estimating the contribution of
-      direct lighting at a given intersection point. The difference between the
-      two is that the first function, estimate_direct_lighting_hemisphere, uses
-      uniform sampling in a hemisphere around the intersection point to estimate
-      direct lighting, while the second function,
-      estimate_direct_lighting_importance, uses importance sampling.
-    </p>
-    <p>
-      The estimate_direct_lighting_hemisphere function first constructs a
-      coordinate system with the hit point normal aligned with the Z-axis (0, 0,
-      1). It then generates a random direction in the hemisphere above the hit
-      point using a hemisphere sampler. For each sample, it transforms the
-      sample into world space, generates a ray, and checks if the ray intersects
-      any object in the scene. If it does not intersect any objects, it
-      calculates the contribution of the light by multiplying the light's
-      emission, the BSDF of the surface at the intersection point, and the
-      cosine of the angle between the sampled direction and the surface normal.
-      Finally, it averages the contributions over all the samples and returns
-      the result.
-    </p>
-    <p>
-      The estimate_direct_lighting_importance function also constructs a
-      coordinate system with the hit point normal aligned with the Z-axis. It
-      then loops over all the lights in the scene and for each light, it
-      generates a random direction using importance sampling according to the
-      probability density function (pdf) of the light. It generates a ray,
-      checks for intersection with objects, and calculates the light's
-      contribution using the same method as in the
-      estimate_direct_lighting_hemisphere function. Finally, it averages the
-      contributions over all the lights and samples and returns the result.
-    </p>
+    <div id="row">
+      <div>
+        <img src="img/bunny_1_1.png" width="98%" id="figure" />
+        <figcaption>1 light ray</figcaption>
+      </div>
+      <div>
+        <img src="img/bunny_4_1.png" width="98%" id="figure" />
+        <figcaption>4 light rays</figcaption>
+      </div>
+    </div>
     <br />
     <h3>
-      Show some images rendered with both implementations of the direct lighting
-      function. Focus on one particular scene with at least one area light and
-      compare the noise levels in soft shadows when rendering with 1, 4, 16, and
-      64 light rays (the -l flag) and with 1 sample per pixel (the -s flag)
-      using light sampling, not uniform hemisphere sampling.
+      Show us a screenshot of your shaded cloth lying peacefully at rest on the plane.
     </h3>
     <br />
     <div id="row">
@@ -304,84 +279,23 @@
     </div>
     <br />
     <br />
-    <div id="row">
-      <div>
-        <img src="img/bunny_16_1.png" width="98%" id="figure" />
-        <figcaption>16 light rays</figcaption>
-      </div>
-      <div>
-        <img src="img/bunny_64_1.png" width="98%" id="figure" />
-        <figcaption>64 light rays</figcaption>
-      </div>
-    </div>
-    <p>
-      Looking at the images rendered above, it can be seen that there is a
-      drastic amount of noise that gets reduced as we add more light rays. With
-      1 ray, the shadowed area of the bunny is a lot noisier, and reaches a
-      pretty large distance into the box. But as we increase rays, the shadow
-      begins to get softer and concentrate more around the bunny than into the
-      box. The increased number of rays evidently generates more accuracy in the
-      estimation of reflected light (less variance). The shadows in the corners
-      of the wall also soften as the number of rays increase.
-    </p>
-    <h3>
-      Compare the results between uniform hemisphere sampling and lighting
-      sampling in a one-paragraph analysis.
-    </h3>
-    <p>
-      The results from uniform sampling are much noiser in general than the
-      results from importance sampling the lights because they sample uniformly
-      around the intersection point rather than from the light sources in the
-      scene themselves. The results from uniform sampling also are unable to
-      render images that only have point lights, whereas the lighting sampling
-      algorithm saves time on point lights by only sampling once. The results
-      for uniform hemisphere sampling and lighting sampling do converge to the
-      same image as the number of samples increases since they are built from
-      the same mesh, but for lower sample-per-pixel rates the lighting sampling
-      greatly out performs the uniform hemisphere sampling because the uniform
-      sampling leaves black dots throughut the image since each pixel is
-      sampling uniformly, whereas with lighting sampling each pixel is sampling
-      from the same set of lights, so noise is more concentrated in areas of
-      shadow.
-    </p>
-    <br />
-    <br />
 
     <h2>Part 4: Handling self-collisions</h2>
-    <h3>Walk through your implementation of the indirect lighting function.</h3>
-    <p>
-      In order to implement the indirect lighting function, we had to sum up the
-      possible paths that bounces of light could take after the zeroeth or first
-      bounces of light. First, we had to implement <code>sample_f</code>, which
-      represents a diffuse material that reflects incoming light equally across
-      all directions on the hemisphere. This function samples the incoming ray,
-      and we implemented it by calling <code>get_sample</code> on the
-      <code>sampler</code> variable, which samples an incoming direction and
-      writes that into <code>wi</code>.
-    </p>
-    <p>
-      Once we implemented sample_f, we now are able to implement
-      <code>at_least_one_bounce_radiance</code>, which recursively calls
-      <code>one_bounce_radiance</code> for each bounce of light and stops using
-      a Russian Roulette algorithm that terminates with probability 0.4. Within
-      <code>one_bounce_radiance</code>, if the algorithm is not terminated by
-      Russian Roulette and if the depth of the ray is less than or equal to 1,
-      then we will call <code>sample_f</code> based on the BSDF at the current
-      <code>Intersection</code>, trace a ray in that direction, then recursively
-      call <code>at_least_one_bounce_radiance</code>
-      by adding the recursive output to the current output.
-    </p>
-    <p>
-      After <code>at_least_one_bounce_radiance</code> was updated, we also had
-      to update <code>est_radiance_global_illumination</code> so that it returns
-      <code
-        >L_out = zero_bounce_radiance(r, isect) +
-        at_least_one_bounce_radiance(r, isect);</code
-      >, which combines the direct and indirect lighting estimates.
-    </p>
+    <h3>Show us at least 3 screenshots that document how your cloth falls 
+      and folds on itself, starting with an early, initial self-collision 
+      and ending with the cloth at a more restful state (even if it is still 
+      slightly bouncy on the ground).</h3>
+      <div id="row">
+        <div>
+          <img src="img/part4_banana.png" width="98%" id="figure" />
+        </div>
+        <div>
+          <img src="img/part4_bunny.png" width="98%" id="figure" />
+        </div>
+      </div>
     <h3>
-      Show some images rendered with global (direct and indirect) illumination.
-      Use 1024 samples per pixel.
+      Vary the density as well as ks and describe with words and screenshots how they affect the behavior of the cloth as it falls on itself.
+
     </h3>
     <div id="row">
       <div>
@@ -391,132 +305,39 @@
         <img src="img/part4_bunny.png" width="98%" id="figure" />
       </div>
     </div>
-    <h3>
-      Pick one scene and compare rendered views first with only direct
-      illumination, then only indirect illumination. Use 1024 samples per pixel.
-      (You will have to edit PathTracer::at_least_one_bounce_radiance(...) in
-      your code to generate these views.)
-    </h3>
-    <div id="row">
-      <div>
-        <img src="img/direct_light.png" width="98%" id="figure" />
-        <figcaption>direct illumination </figcaption>
-      </div>
-      <div>
-        <img src="img/indirect_light.png" width="98%" id="figure" />
-        <figcaption>indirect illumination </figcaption>
-      </div>
-    </div>
-    <br />
-
-    <h3>
-      For CBbunny.dae, compare rendered views with max_ray_depth set to 0, 1, 2,
-      3, and 100 (the -m flag). Use 1024 samples per pixel.
-    </h3>
-    <div id="row">
-      <div>
-        <img src="img/max_ray_0.png" width="98%" id="figure" />
-        <figcaption>max_ray_depth = 0</figcaption>
-      </div>
-      <div>
-        <img src="img/max_ray_1.png" width="98%" id="figure" />
-        <figcaption>max_ray_depth = 1</figcaption>
-      </div>
-    </div>
-    <div id="row">
-      <div>
-        <img src="img/max_ray_2.png" width="98%" id="figure" />
-        <figcaption>max_ray_depth = 2</figcaption>
-      </div>
-      <div>
-        <img src="img/max_ray_3.png" width="98%" id="figure" />
-        <figcaption>max_ray_depth = 3</figcaption>
-      </div>
-      <div>
-        <img src="img/max_ray_100.png" width="98%" id="figure" />
-        <figcaption>max_ray_depth = 100</figcaption>
-      </div>
-    </div>
-    <br />
-
-    <h3>
-      Pick one scene and compare rendered views with various sample-per-pixel
-      rates, including at least 1, 2, 4, 8, 16, 64, and 1024. Use 4 light rays.
-    </h3>
-    <div id="row">
-      <div>
-        <img src="img/sphere_1.png" width="98%" id="figure" />
-        <figcaption>sample-per-pixel = 1</figcaption>
-      </div>
-      <div>
-        <img src="img/sphere_2.png" width="98%" id="figure" />
-        <figcaption>sample per pixel = 2</figcaption>
-      </div>
-    </div>
-    <div id="row">
-      <div>
-        <img src="img/sphere_3.png" width="98%" id="figure" />
-        <figcaption>sample per pixel = 3</figcaption>
-      </div>
-
-      <div>
-        <img src="img/sphere_4.png" width="98%" id="figure" />
-        <figcaption>sample per pixel = 4</figcaption>
-      </div>
-    </div>
-    <div id="row">
-      <div>
-        <img src="img/sphere_8.png" width="98%" id="figure" />
-        <figcaption>sample per pixel = 8</figcaption>
-      </div>
-      <div>
-        <img src="img/sphere_16.png" width="98%" id="figure" />
-        <figcaption>sample per pixel = 16</figcaption>
-      </div>
-    </div>
-    <div id="row">
-      <div>
-        <img src="img/sphere_64.png" width="98%" id="figure" />
-        <figcaption>sample per pixel = 64</figcaption>
-      </div>
-      <div>
-        <img src="img/sphere_1024.png" width="98%" id="figure" />
-        <figcaption>sample per pixel = 1024</figcaption>
-      </div>
-    </div>
-
+    <p>
+      TO DO
+    </p>
     <br />
     <br />
 
-    <h2>Part 5: Shaders (longest, start early!)</h2>
+    <h2>Part 5: Shaders</h2>
     <h3>
-      Explain adaptive sampling. Walk through your implementation of the
-      adaptive sampling.
+      Explain in your own words what is a shader program and how vertex and fragment shaders work together to create lighting and material effects.
     </h3>
     <p>
-      In part 5 of the project, we added adaptive sampling to reduce the noise
-      in the image, which concentrates the samples in more difficult parts of
-      the image as opposed to using a fixed number of samples per pixel.
+      GLSL Shaders are programs that can run in parallel on GPU and take in an input such as a texture file or color scheme and output a 4D vector that contains useful
+      information for renering that position in the scene. These are useful because they are much faster than just rendering our scene using our CPU to do all of the 
+      raytracing computation. These vertex and fragment shaders work togethe to create lighting and material effects since vertex shaders modify the geometry of the scene 
+      and fragment shaders modify the color at each position in the scene. This allows our renderer to be able to simulate lighting effects on various geometries or a particular
+      type of material.
     </p>
-    <p>
-      We implemented adaptive sampling by updating
-      <code>raytrace_pixel</code> to detect whether the pixel has converged as
-      we trace the samples thrrough that pixel. In order to do this, we solve
-      for the pixels convergence
-      <code>double I = 1.96 * (standard_deviation / sqrt(sample_number))</code>
-      and check if <code>I <= (maxTolerance * mean)</code>, for which we would
-      say the pixel has converged and we stop tracing rays for this pixel. we
-      calculated the standard deviation by solving for the variance using the
-      sum of the illuminance and sum of the illuminance squared for the pixel
-      and taking the square root of said variance.
+      
+    <h3>
+      Explain the Blinn-Phong shading model in your own words. Show a screenshot of your Blinn-Phong shader outputting only the ambient component, a screen shot only outputting
+       the diffuse component, a screen shot only outputting the specular component, and one using the entire Blinn-Phong model.
+    </h3>
+    <p>The Blinn-Phong shading model takes into account ambient lighting, diffuse lighting, and specular highlights when computing the color for a given position. We found this color
+      by implementing this equation that has each of the three lighting components as a term in the equation.
     </p>
     <h3>
-      Pick two scenes and render them with at least 2048 samples per pixel. Show
-      a good sampling rate image with clearly visible differences in sampling
-      rate over various regions and pixels. Include both your sample rate image,
-      which shows your how your adaptive sampling changes depending on which
-      part of the image you are rendering, and your noise-free rendered result.
-      Use 1 sample per light and at least 5 for max ray depth.
+      Show a screenshot of your texture mapping shader using your own custom texture by modifying the textures in /textures/.
+    </h3>
+    <h3>
+      Show a screenshot of bump mapping on the cloth and on the sphere. Show a screenshot of displacement mapping on the sphere. Use the same texture for both renders. You can either provide your own texture or use one of the ones in the textures directory, BUT choose one that's not the default texture_2.png. Compare the two approaches and resulting renders in your own words. Compare how your the two shaders react to the sphere by changing the sphere mesh's coarseness by using -o 16 -a 16 and then -o 128 -a 128.
+    </h3>
+    <h3>
+      Show a screenshot of your mirror shader on the cloth and on the sphere.
     </h3>
     <div id="row">
       <div>
