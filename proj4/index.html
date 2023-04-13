@@ -34,8 +34,8 @@
     </h3>
   
     <div id="row">
-      <div>
-        <img src="img/all-constraints.png" width="98%" id="figure" />
+      <div id="row-vert">
+        <img src="img/all-constraints.png" width="50%" id="figure" />
         <figcaption>Our cloth wireframe</figcaption>
       </div>
     </div>
@@ -238,8 +238,8 @@
       If you choose to use different parameters than the default ones, please list them.
     </h3>
 
-    <div>
-      <img src="img/pinned_4_rest.png" width="98%" id="figure" />
+    <div id="row-vert">
+      <img src="img/pinned_4_rest.png" width="50%" id="figure" />
       <figcaption>resting state of pinned4 with DEFAULT SETTINGS</figcaption>
     </div>    
 
@@ -279,8 +279,8 @@
       Show us a screenshot of your shaded cloth lying peacefully at rest on the plane.
     </h3>
 
-    <div>
-      <img src="img/planerest.png" width="98%" id="figure" />
+    <div id="row-vert">
+      <img src="img/planerest.png" width="50%" id="figure" />
       <figcaption>plane lying peacefully at rest</figcaption>
     </div>
 
@@ -292,13 +292,32 @@
       and folds on itself, starting with an early, initial self-collision 
       and ending with the cloth at a more restful state (even if it is still 
       slightly bouncy on the ground).</h3>
+      
+      <div id="row">
+          <img src="img/falling.gif" width="50%" id="figure" />
+      </div>
+
       <div id="row">
         <div>
-          <img src="img/part4_banana.png" width="98%" id="figure" />
+          <img src="img/1.png" width="98%" id="figure" />
+          <figcaption>start</figcaption>
         </div>
+  
         <div>
-          <img src="img/part4_bunny.png" width="98%" id="figure" />
+          <img src="img/2.png" width="98%" id="figure" />
+          <figcaption>early</figcaption>
         </div>
+  
+        <div>
+          <img src="img/3.png" width="98%" id="figure" />
+          <figcaption>mid</figcaption>
+        </div>
+
+        <div>
+          <img src="img/4.png" width="98%" id="figure" />
+          <figcaption>final</figcaption>
+        </div>
+  
       </div>
     <h3>
       Vary the density as well as ks and describe with words and screenshots how they affect the behavior of the cloth as it falls on itself.
@@ -313,7 +332,18 @@
       </div>
     </div>
     <p>
-      TO DO
+      When we vary density, lower values create folds in the cloth that are larger and more voluminous compared 
+      to higher values that create smaller folds that drape over each other more times. The differences in their 
+      resting states can be described as lower densities having less overlapping of folds and higher densities having more 
+      overlapping of folds. 
+
+    </p>
+    <p>
+      When we vary ks, a lower value (as seen before) makes for a more flexible and springy or bouncy cloth.
+      When ks a smaller value, it will tend to fold over multiple times and bounce around multiple times 
+      before it comes to a resting position. Even as we observe it in its resting phase, it will begin to unfold 
+      slowly. When it becomes larger, however, the fabric is more rigid and tough, making it bounch around 
+      less and assume its resting position faster.
     </p>
     <br />
     <br />
