@@ -7,7 +7,7 @@
     <h1>Project 4: Cloth Simulator</h1>
     by Kelly Hu and Sofia Howard-Jimenez
     <br />
-    <a href="https://hukellyy.github.io/proj-webpage-kelbee/proj3-1/index.html"
+    <a href="https://hukellyy.github.io/proj-webpage-kelbee/proj4/index.html"
       >https://hukellyy.github.io/proj-webpage-kelbee/proj3-1/index.html</a
     >
 
@@ -34,8 +34,8 @@
     </h3>
   
     <div id="row">
-      <div>
-        <img src="img/all-constraints.png" width="98%" id="figure" />
+      <div id="row-vert">
+        <img src="img/all-constraints.png" width="50%" id="figure" />
         <figcaption>Our cloth wireframe</figcaption>
       </div>
     </div>
@@ -238,8 +238,8 @@
       If you choose to use different parameters than the default ones, please list them.
     </h3>
 
-    <div>
-      <img src="img/pinned_4_rest.png" width="98%" id="figure" />
+    <div id="row-vert">
+      <img src="img/pinned_4_rest.png" width="50%" id="figure" />
       <figcaption>resting state of pinned4 with DEFAULT SETTINGS</figcaption>
     </div>    
 
@@ -250,33 +250,40 @@
       on the sphere using the default ks = 5000 as well as with ks = 500 and ks = 50000. Describe 
       the differences in the results.</h3>
     <p>
-     Lorem ipsum
+     With a lower ks value of 500, we can observe through the motions of the cloth falling onto the sphere 
+     that the cloth has more wrinkles created when it is in its final resting state, almost as if the fabric is thinner or lighter. When we increased 
+     it to 50000, the cloth in its resting state has more wrinkles and droops down less, wrapping the sphere 
+     less than the default ks parameter does. With the 500 ks value, the cloth is wrapping the sphere the most 
+     tightly.
     </p>
     <div id="row">
       <div>
-        <img src="img/bunny_1_1.png" width="98%" id="figure" />
-        <figcaption>1 light ray</figcaption>
+        <img src="img/5000.png" width="98%" id="figure" />
+        <figcaption>ks = 5000 (default)</figcaption>
       </div>
+
       <div>
-        <img src="img/bunny_4_1.png" width="98%" id="figure" />
-        <figcaption>4 light rays</figcaption>
+        <img src="img/500.png" width="98%" id="figure" />
+        <figcaption>ks = 500</figcaption>
       </div>
+
+      <div>
+        <img src="img/50000.png" width="98%" id="figure" />
+        <figcaption>ks = 50000</figcaption>
+      </div>
+
     </div>
+
     <br />
     <h3>
       Show us a screenshot of your shaded cloth lying peacefully at rest on the plane.
     </h3>
-    <br />
-    <div id="row">
-      <div>
-        <img src="img/bunny_1_1.png" width="98%" id="figure" />
-        <figcaption>1 light ray</figcaption>
-      </div>
-      <div>
-        <img src="img/bunny_4_1.png" width="98%" id="figure" />
-        <figcaption>4 light rays</figcaption>
-      </div>
+
+    <div id="row-vert">
+      <img src="img/planerest.png" width="50%" id="figure" />
+      <figcaption>plane lying peacefully at rest</figcaption>
     </div>
+
     <br />
     <br />
 
@@ -285,13 +292,32 @@
       and folds on itself, starting with an early, initial self-collision 
       and ending with the cloth at a more restful state (even if it is still 
       slightly bouncy on the ground).</h3>
+      
+      <div id="row">
+          <img src="img/falling.gif" width="50%" id="figure" />
+      </div>
+
       <div id="row">
         <div>
-          <img src="img/part4_banana.png" width="98%" id="figure" />
+          <img src="img/1.png" width="98%" id="figure" />
+          <figcaption>start</figcaption>
         </div>
+  
         <div>
-          <img src="img/part4_bunny.png" width="98%" id="figure" />
+          <img src="img/2.png" width="98%" id="figure" />
+          <figcaption>early</figcaption>
         </div>
+  
+        <div>
+          <img src="img/3.png" width="98%" id="figure" />
+          <figcaption>mid</figcaption>
+        </div>
+
+        <div>
+          <img src="img/4.png" width="98%" id="figure" />
+          <figcaption>final</figcaption>
+        </div>
+  
       </div>
     <h3>
       Vary the density as well as ks and describe with words and screenshots how they affect the behavior of the cloth as it falls on itself.
@@ -306,7 +332,18 @@
       </div>
     </div>
     <p>
-      TO DO
+      When we vary density, lower values create folds in the cloth that are larger and more voluminous compared 
+      to higher values that create smaller folds that drape over each other more times. The differences in their 
+      resting states can be described as lower densities having less overlapping of folds and higher densities having more 
+      overlapping of folds. 
+
+    </p>
+    <p>
+      When we vary ks, a lower value (as seen before) makes for a more flexible and springy or bouncy cloth.
+      When ks a smaller value, it will tend to fold over multiple times and bounce around multiple times 
+      before it comes to a resting position. Even as we observe it in its resting phase, it will begin to unfold 
+      slowly. When it becomes larger, however, the fabric is more rigid and tough, making it bounch around 
+      less and assume its resting position faster.
     </p>
     <br />
     <br />
@@ -423,7 +460,7 @@
     <br />
     <p>Link to Website:</p>
     <a href="https://hukellyy.github.io/proj-webpage-kelbee/proj3-1/index.html"
-      >https://hukellyy.github.io/proj-webpage-kelbee/proj3-1/index.html</a
+      >https://hukellyy.github.io/proj-webpage-kelbee/proj4/index.html</a
     >
   </body>
 </html>
