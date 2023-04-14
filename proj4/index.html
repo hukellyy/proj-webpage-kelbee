@@ -330,33 +330,92 @@
     <p>The Blinn-Phong shading model takes into account ambient lighting, diffuse lighting, and specular highlights when computing the color for a given position. We found this color
       by implementing this equation that has each of the three lighting components as a term in the equation.
     </p>
+    <div>
+      <img src="img/Screenshot 2023-04-12 at 11.08.45 PM.png" width="98%" id="figure" />
+    </div>
+    <div id="row">
+      <div>
+        <img src="img/Screenshot 2023-04-12 at 11.11.56 PM.png" width="98%" id="figure" />
+        <figcaption>diffuse component only</figcaption>
+      </div>
+      <div>
+        <img src="img/Screenshot 2023-04-12 at 11.12.43 PM.png" width="98%" id="figure" />
+        <figcaption>ambient component only</figcaption>
+      </div>
+      <div>
+        <img src="img/Screenshot 2023-04-12 at 11.13.47 PM.png" width="98%" id="figure" />
+        <figcaption>specular component only</figcaption>
+      </div>
+    </div>
+    <div>
+      <img src="img/Screenshot 2023-04-12 at 11.14.54 PM.png" width="98%" id="figure" />
+      <figcaption>full Blinn-Phong</figcaption>
+    </div>
     <h3>
       Show a screenshot of your texture mapping shader using your own custom texture by modifying the textures in /textures/.
     </h3>
+    <div>
+      <img src="img/texture_6.png" width="98%" id="figure" />
+      <figcaption>custom texture</figcaption>
+    </div>
+    <div id="row">
+      <div>
+        <img src="img/Screenshot 2023-04-12 at 11.29.34 PM.png" width="98%" id="figure" />
+      </div>
+      <div>
+        <img src="img/Screenshot 2023-04-12 at 11.28.49 PM.png" width="98%" id="figure" />
+      </div>
+    </div>
     <h3>
-      Show a screenshot of bump mapping on the cloth and on the sphere. Show a screenshot of displacement mapping on the sphere. Use the same texture for both renders. You can either provide your own texture or use one of the ones in the textures directory, BUT choose one that's not the default texture_2.png. Compare the two approaches and resulting renders in your own words. Compare how your the two shaders react to the sphere by changing the sphere mesh's coarseness by using -o 16 -a 16 and then -o 128 -a 128.
-    </h3>
-    <h3>
-      Show a screenshot of your mirror shader on the cloth and on the sphere.
+      Show a screenshot of bump mapping on the cloth and on the sphere. Show a screenshot of displacement mapping on the sphere. 
+      Use the same texture for both renders. You can either provide your own texture or use one of the ones in the textures directory, 
+      BUT choose one that's not the default texture_2.png. Compare the two approaches and resulting renders in your own words.
+      Compare how your the two shaders react to the sphere by changing the sphere mesh's coarseness by using -o 16 -a 16 and then -o 128 -a 128.
     </h3>
     <div id="row">
       <div>
-        <img src="img/part5_bunny.png" width="98%" id="figure" />
+        <img src="img/bump_normal.png" width="98%" id="figure" />
+        <figcaption>bump mapping with default settings</figcaption>
       </div>
       <div>
-        <img src="img/part5_sphere.png" width="98%" id="figure" />
+        <img src="img/displace_normal.png" width="98%" id="figure" />
+        <figcaption>displacement mapping with default settings</figcaption>
       </div>
     </div>
     <div id="row">
       <div>
-        <img src="img/part5_bunny_sr.png" width="98%" id="figure" />
-        <figcaption>sample rate image for the bunny</figcaption>
+        <img src="img/bump-16.png" width="98%" id="figure" />
+        <figcaption>bump mapping with -o 16 -a 16</figcaption>
       </div>
       <div>
-        <img src="img/part5_sphere_sr.png" width="98%" id="figure" />
-        <figcaption>sample rate image for the spheres</figcaption>
+        <img src="img/displace-16.png" width="98%" id="figure" />
+        <figcaption>displacement mapping with -o 16 -a 16</figcaption>
       </div>
+    </div>
+    <div id="row">
+      <div>
+        <img src="img/bump-128.png" width="98%" id="figure" />
+        <figcaption>bump mapping with -o 128 -a 128</figcaption>
       </div>
+      <div>
+        <img src="img/displace-128.png" width="98%" id="figure" />
+        <figcaption>displacement mapping with -o 128 -a 128</figcaption>
+      </div>
+    </div>
+    <h3>
+      Show a screenshot of your mirror shader on the cloth and on the sphere.
+    </h3>
+    
+      <div>
+        <img src="img/mirror-cloth-only.png" width="98%" id="figure" />
+      </div>
+      <div>
+        <img src="img/mirror-sphere.png" width="98%" id="figure" />
+      </div>
+      <div>
+        <img src="img/mirror-cloth.png" width="98%" id="figure" />
+      </div>
+    
     </div>
 
     <br /><br />
